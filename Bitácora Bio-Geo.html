@@ -1,0 +1,1537 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Bitácora Bio-Geo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#eef1ec; --paper-raised:#ffffff; --ink:#1c2622; --ink-soft:#54615a; --ink-faint:#8b968f; --line:#d7ddd3;
+    --accent:#3f7168; --accent-strong:#2c5850; --accent-soft:#dcebe6;
+    --amber:#b9822c; --amber-soft:#f2e3c6;
+    --danger:#af4a3c; --danger-soft:#f5ded9;
+    --practica:#6a5a9c; --practica-soft:#e7e2f3;
+    --prog:#2f6a90; --prog-soft:#dbe8ef;
+    --shadow: 0 1px 2px rgba(28,38,34,.06), 0 6px 20px -8px rgba(28,38,34,.18);
+    --font-display:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#121815; --paper-raised:#1a221e; --ink:#eef1ec; --ink-soft:#a9b5ad; --ink-faint:#6d7972; --line:#2b3630;
+      --accent:#72b6a6; --accent-strong:#8fcabc; --accent-soft:#20342f;
+      --amber:#e0ab5c; --amber-soft:#3a2e17;
+      --danger:#e2917f; --danger-soft:#3a201c;
+      --practica:#b6a6e6; --practica-soft:#2b2440;
+      --prog:#7fb4dd; --prog-soft:#1b3040;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 24px -8px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#121815; --paper-raised:#1a221e; --ink:#eef1ec; --ink-soft:#a9b5ad; --ink-faint:#6d7972; --line:#2b3630;
+    --accent:#72b6a6; --accent-strong:#8fcabc; --accent-soft:#20342f;
+    --amber:#e0ab5c; --amber-soft:#3a2e17;
+    --danger:#e2917f; --danger-soft:#3a201c;
+    --practica:#b6a6e6; --practica-soft:#2b2440;
+    --prog:#7fb4dd; --prog-soft:#1b3040;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 24px -8px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); color:var(--ink); font-family:var(--font-body); padding-inline:16px; padding-block:28px 48px;}
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important;} }
+  .wrap{max-width:1080px; margin:0 auto; display:flex; flex-direction:column; gap:20px;}
+  a{color:var(--accent-strong);}
+  h1,h2,h3,h4{font-family:var(--font-display); font-weight:600; text-wrap:balance; margin:0;}
+  .num-mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums;}
+  input:focus-visible, button:focus-visible, summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  input[type=date],input[type=number],input[type=text]{font-family:var(--font-body); font-size:.92rem; padding:7px 9px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:var(--ink);}
+
+  .banner{background:var(--amber-soft); border:1px solid var(--amber); color:var(--ink); padding:10px 14px; border-radius:10px; font-size:.88rem;}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--paper-raised); border:1px solid var(--line); border-radius:18px; padding:24px clamp(16px,4vw,32px); box-shadow:var(--shadow); display:flex; flex-direction:column; gap:18px;}
+  .eyebrow{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.09em; text-transform:uppercase; color:var(--accent-strong); margin:0 0 4px;}
+  .hero h1{font-size:clamp(1.6rem,3.4vw,2.15rem);}
+  .hero-sync{font-size:.72rem; color:var(--ink-faint); display:flex; align-items:center; gap:5px;}
+  .hero-sync .dot{width:7px; height:7px; border-radius:50%; background:var(--accent);}
+  .hero-stats{display:flex; flex-wrap:wrap; align-items:center; gap:26px;}
+  .stat-big{display:flex; flex-direction:column; gap:2px;}
+  .stat-big .num{font-family:var(--font-display); font-size:2.5rem; font-weight:600; line-height:1;}
+  .stat-big .label{font-size:.76rem; color:var(--ink-soft);}
+  .stat-ring{position:relative; width:104px; height:104px; display:flex; align-items:center; justify-content:center; flex:none;}
+  .stat-ring svg{width:104px; height:104px; transform:rotate(-90deg);}
+  .stat-ring circle{fill:none; stroke-width:9;}
+  .ring-track{stroke:var(--line);} .ring-fg{stroke:var(--accent); stroke-linecap:round; transition:stroke-dashoffset .4s ease;}
+  .ring-label{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;}
+  .ring-label span{font-family:var(--font-mono); font-weight:600; font-size:1.1rem;}
+  .ring-label small{font-size:.6rem; color:var(--ink-soft); max-width:76px; line-height:1.15;}
+  .ring-caption{max-width:230px; font-size:.72rem; color:var(--ink-faint); line-height:1.4;}
+  .stat-mini-group{display:flex; flex-wrap:wrap; gap:9px; margin-left:auto;}
+  .mini-chip{display:flex; flex-direction:column; gap:2px; padding:7px 12px; border-radius:10px; background:var(--paper); border:1px solid var(--line); min-width:76px;}
+  .mini-chip .n{font-family:var(--font-mono); font-weight:600; font-size:1.1rem;} .mini-chip .l{font-size:.65rem; color:var(--ink-soft);}
+  .mini-chip.en_progreso{border-color:var(--amber); background:var(--amber-soft);}
+  .mini-chip.dominado{border-color:var(--accent); background:var(--accent-soft);}
+  .config-panel{border-top:1px solid var(--line); padding-top:14px;}
+  .config-panel summary{cursor:pointer; font-size:.86rem; font-weight:500; color:var(--ink-soft);}
+  .config-row{display:flex; flex-wrap:wrap; gap:16px; margin-top:12px;}
+  .config-row label{display:flex; flex-direction:column; gap:4px; font-size:.78rem; color:var(--ink-soft);}
+  .config-note{font-size:.82rem; color:var(--ink-soft); margin:10px 0 0;}
+  .export-btn{margin-top:10px; font-size:.78rem; background:transparent; border:1px solid var(--line); color:var(--ink-soft); padding:6px 12px; border-radius:8px; cursor:pointer;}
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex; gap:4px; overflow-x:auto; border-bottom:1px solid var(--line);}
+  .tab-btn{font-family:var(--font-body); font-size:.86rem; font-weight:500; padding:10px 14px; border:none; background:transparent; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap;}
+  .tab-btn.active{color:var(--accent-strong); border-bottom-color:var(--accent-strong);}
+  .tabpanel{display:flex; flex-direction:column; gap:18px;}
+  .tabpanel[hidden]{display:none;}
+
+  .card{background:var(--paper-raised); border:1px solid var(--line); border-radius:16px; padding:20px clamp(14px,3vw,24px); box-shadow:var(--shadow); display:flex; flex-direction:column; gap:14px;}
+  .card h2{font-size:1.05rem; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;}
+  .card h2 .sub{font-family:var(--font-body); font-weight:400; font-size:.76rem; color:var(--ink-faint);}
+  .badge{font-family:var(--font-mono); font-size:.72rem; background:var(--accent-soft); color:var(--accent-strong); border-radius:99px; padding:1px 9px; font-weight:600;}
+  .subhead{font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin:2px 0 -4px;}
+  .empty-note{font-size:.86rem; color:var(--ink-soft); padding:8px 0;}
+  .method-note{font-size:.78rem; color:var(--ink-soft); margin-top:-8px;}
+
+  /* ---------- pace banner ---------- */
+  .pace-banner{padding:10px 14px; border-radius:10px; font-size:.85rem; display:flex; flex-direction:column; gap:3px; border:1px solid var(--line); background:var(--paper);}
+  .pace-banner .big{font-weight:600;}
+  .pace-banner.ok{background:var(--accent-soft); border-color:var(--accent);}
+  .pace-banner.warn{background:var(--amber-soft); border-color:var(--amber);}
+  .pace-banner.bad{background:var(--danger-soft); border-color:var(--danger);}
+
+  /* ---------- study cards (temas / práctica) ---------- */
+  .today-list{display:flex; flex-direction:column; gap:8px;}
+  .study-card{border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--paper);}
+  .study-card-main{display:flex; align-items:center; gap:12px; padding:11px 13px; flex-wrap:wrap;}
+  .study-info{flex:1; min-width:180px;}
+  .study-title{margin:0; font-weight:500; font-size:.94rem;}
+  .study-meta{margin:2px 0 0; font-size:.76rem; color:var(--ink-soft);}
+  .study-proto{margin:4px 0 0; font-size:.76rem; color:var(--ink-faint); font-style:italic;}
+  .study-actions{display:flex; gap:8px; flex-wrap:wrap; flex:none;}
+  .btn-reveal, .rate-row button, .add-tema-form button, .export-btn, .cal-nav button, .prog-config button, .btn-skip{font-family:var(--font-body); cursor:pointer;}
+  .btn-reveal{font-weight:500; font-size:.82rem; border-radius:8px; border:1px solid var(--accent); background:transparent; color:var(--accent-strong); padding:7px 13px; white-space:nowrap;}
+  .btn-reveal:hover{background:var(--accent-soft);}
+  .btn-skip{font-weight:500; font-size:.8rem; border-radius:8px; border:1px solid var(--line); background:transparent; color:var(--ink-faint); padding:7px 11px; white-space:nowrap;}
+  .btn-skip:hover{background:var(--danger-soft); color:var(--danger); border-color:var(--danger);}
+  .rate-row{display:flex; flex-wrap:wrap; gap:8px; padding:0 13px 13px;}
+  .rate-row button{font-weight:500; font-size:.82rem; border-radius:8px; background:var(--paper-raised); color:var(--ink); border:1px solid var(--line); padding:7px 10px; flex:1; min-width:96px;}
+  .rate-row button[data-q="1"]{border-color:var(--danger); color:var(--danger);}
+  .rate-row button[data-q="3"]{border-color:var(--amber); color:var(--amber);}
+  .rate-row button[data-q="4"], .rate-row button[data-q="5"]{border-color:var(--accent); color:var(--accent-strong);}
+
+  /* ---------- hoy nav & add-task ---------- */
+  .hoy-nav{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .hoy-nav button{font-family:var(--font-body); cursor:pointer; background:transparent; border:1px solid var(--line); border-radius:8px; padding:5px 11px; color:var(--ink); font-size:.82rem;}
+  .hoy-nav button:disabled{opacity:.4; cursor:default;}
+  .hoy-date{font-size:.86rem; font-weight:600; color:var(--ink-soft);}
+  .hoy-today-btn{border-color:var(--accent) !important; color:var(--accent-strong) !important;}
+  .add-task-box{margin-top:4px;}
+  .add-task-form{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; align-items:center;}
+  .add-task-form select, .add-task-form input[type=text], .add-task-form input[type=date]{font-family:var(--font-body); font-size:.82rem; border:1px solid var(--line); border-radius:8px; padding:6px 8px; background:var(--paper); color:var(--ink);}
+  .add-task-form input[type=text]{flex:1; min-width:140px;}
+  .add-task-form button[type=submit]{font-family:var(--font-body); cursor:pointer; border:1px solid var(--accent); background:var(--accent); color:#fff; border-radius:8px; padding:6px 12px; font-size:.82rem;}
+
+  .confidence-wrap{display:flex; align-items:center; gap:6px; flex:none;}
+  .confidence-slider{width:70px; accent-color:var(--accent);}
+  .confidence-val{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); width:30px;}
+
+  /* ---------- calendar ---------- */
+  .cal-head{display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;}
+  .cal-nav{display:flex; gap:6px;}
+  .cal-nav button{background:transparent; border:1px solid var(--line); border-radius:8px; padding:5px 11px; color:var(--ink); font-size:.86rem;}
+  .cal-title{font-family:var(--font-display); font-weight:600; font-size:1.02rem; text-transform:capitalize;}
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
+  .cal-dow{font-size:.6rem; text-align:center; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.03em; padding-bottom:2px;}
+  .cal-cell{min-height:58px; border:1px solid var(--line); border-radius:8px; padding:4px 5px; display:flex; flex-direction:column; gap:3px; cursor:pointer; background:var(--paper); font-size:.68rem;}
+  .cal-cell.empty{visibility:hidden; border-color:transparent; cursor:default;}
+  .cal-cell:not(.empty):hover{border-color:var(--accent);}
+  .cal-cell.selected{outline:2px solid var(--accent-strong); outline-offset:-1px;}
+  .cal-cell.today{border-color:var(--accent-strong);}
+  .cal-cell.today .d{color:var(--accent-strong); font-weight:700;}
+  .cal-cell.past{opacity:.55;}
+  .cal-cell.off{opacity:.5;}
+  .cal-cell.holiday{background:var(--danger-soft); border-color:var(--danger);}
+  .cal-cell.reserve{background:var(--amber-soft);}
+  .cal-cell .d{font-family:var(--font-mono);}
+  .cal-cell .flag{font-size:.72rem; align-self:flex-end;}
+  .cal-dots{display:flex; flex-wrap:wrap; gap:2px; margin-top:auto;}
+  .cal-dot{width:7px; height:7px; border-radius:2px; flex:none;}
+  .cal-dot.review{background:var(--accent);} .cal-dot.newd{background:var(--amber);} .cal-dot.practica{background:var(--practica);} .cal-dot.prog{background:var(--prog);}
+  .cal-legend{display:flex; flex-wrap:wrap; gap:12px; font-size:.72rem; color:var(--ink-faint); align-items:center;}
+  .cal-legend span{display:inline-flex; align-items:center; gap:5px;}
+  .cal-legend .cal-dot{width:8px; height:8px;}
+
+  .agenda{display:flex; flex-direction:column; gap:12px; border-top:1px solid var(--line); padding-top:14px;}
+  .agenda-date{font-size:1rem;}
+  .agenda-group{display:flex; flex-direction:column; gap:6px;}
+  .agenda-group h4{margin:0; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); font-family:var(--font-body); font-weight:600;}
+  .agenda-item{font-size:.86rem; background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px; padding:8px 10px;}
+  .agenda-item.newd{border-left-color:var(--amber);}
+  .agenda-item.practica{border-left-color:var(--practica);}
+  .agenda-item.prog{border-left-color:var(--prog);}
+  .agenda-item .t{font-weight:500;}
+  .agenda-item .h{font-size:.76rem; color:var(--ink-soft); margin-top:2px; font-style:italic;}
+  .agenda-empty{font-size:.82rem; color:var(--ink-faint); font-style:italic;}
+  .exam-flag-banner{background:var(--accent-soft); border:1px solid var(--accent); border-radius:9px; padding:8px 12px; font-size:.86rem; font-weight:500;}
+
+  /* ---------- temario ---------- */
+  .prob-summary{display:flex; flex-wrap:wrap; gap:16px; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:12px 14px;}
+  .prob-summary .big{font-family:var(--font-mono); font-size:1.3rem; font-weight:600; color:var(--accent-strong);}
+  .prob-summary p{margin:0; font-size:.8rem; color:var(--ink-soft); max-width:480px;}
+  .bloque-group{border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .bloque-group summary{cursor:pointer; font-weight:600; font-size:.9rem; padding:9px 12px; display:flex; justify-content:space-between; align-items:center; list-style:none; background:var(--paper);}
+  .bloque-group summary::-webkit-details-marker{display:none;}
+  .bloque-count{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); font-weight:400;}
+  .tema-select-row{display:flex; align-items:center; gap:10px; padding:7px 12px; border-top:1px solid var(--line); font-size:.85rem;}
+  .tema-select-row input[type=checkbox]{width:16px; height:16px; accent-color:var(--accent); flex:none;}
+  .tema-select-row .n{font-family:var(--font-mono); color:var(--ink-faint); flex:none; width:24px;}
+  .tema-select-row .title{flex:1;}
+  .practica-mark{color:var(--practica); font-weight:700; cursor:help;}
+  .temario-legend{font-size:.76rem; color:var(--ink-faint);}
+  .temario-legend .practica-mark{margin-right:2px;}
+  .tema-select-row .pill{flex:none; font-size:.64rem; padding:2px 7px; border-radius:99px; border:1px solid var(--line); color:var(--ink-soft); white-space:nowrap;}
+  .tema-select-row .pill.estudiando{border-color:var(--practica); color:var(--practica); background:var(--practica-soft);}
+  .tema-select-row .pill.valorar{border-color:var(--prog); color:var(--prog); background:var(--prog-soft);}
+  .tema-select-row .pill.en_progreso{border-color:var(--amber); color:var(--amber); background:var(--amber-soft);}
+  .tema-select-row .pill.dominado{border-color:var(--accent); color:var(--accent-strong); background:var(--accent-soft);}
+
+  /* ---------- programación ---------- */
+  .prog-config{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;}
+  .prog-config label{display:flex; flex-direction:column; gap:4px; font-size:.78rem; color:var(--ink-soft);}
+  .prog-progress-wrap{display:flex; align-items:center; gap:10px;}
+  .prog-progress{flex:1; height:8px; border-radius:99px; background:var(--line); overflow:hidden;}
+  .prog-progress > div{height:100%; background:var(--prog);}
+  .prog-progress-label{font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft); flex:none;}
+  .checklist{display:flex; flex-direction:column; gap:0;}
+  .check-row{display:flex; align-items:center; gap:10px; padding:8px 4px; border-bottom:1px solid var(--line);}
+  .check-row:last-child{border-bottom:none;}
+  .check-row input[type=checkbox]{width:17px; height:17px; accent-color:var(--prog); flex:none;}
+  .check-row .lab{flex:1; font-size:.87rem;}
+  .check-row.done .lab{color:var(--ink-faint); text-decoration:line-through;}
+  .check-row .date{font-family:var(--font-mono); font-size:.7rem; color:var(--ink-soft); flex:none;}
+  .check-row.overdue .date{color:var(--danger); font-weight:600;}
+
+  /* ---------- disponibilidad ---------- */
+  .weekly-table{display:flex; flex-direction:column; gap:0;}
+  .weekly-row{display:flex; align-items:center; gap:10px; padding:7px 4px; border-bottom:1px solid var(--line);}
+  .weekly-row:last-child{border-bottom:none;}
+  .weekly-row input[type=checkbox]{width:16px; height:16px; accent-color:var(--accent); flex:none;}
+  .weekly-row .day{flex:1; font-size:.86rem;}
+  .weekly-row input[type=number]{width:66px;}
+  .holiday-chip-list{display:flex; flex-wrap:wrap; gap:6px;}
+  .holiday-chip{display:inline-flex; align-items:center; gap:6px; background:var(--paper); border:1px solid var(--line); border-radius:99px; padding:4px 10px; font-size:.78rem;}
+  .holiday-chip button{background:none; border:none; color:var(--ink-faint); cursor:pointer; font-size:.85rem; padding:0; line-height:1;}
+  .holiday-chip button:hover{color:var(--danger);}
+
+  /* ---------- normativa ---------- */
+  .normativa-block h3{font-size:.86rem; font-family:var(--font-body); font-weight:600; margin:0 0 4px;}
+  .normativa-block p{margin:0; font-size:.84rem; color:var(--ink-soft); line-height:1.55;}
+  .normativa-block .links{margin:6px 0 0; font-size:.78rem; display:flex; flex-wrap:wrap; gap:4px 10px;}
+  .normativa-block .cite{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-faint);}
+  .normativa-caveat{font-size:.74rem; color:var(--ink-faint); font-style:italic;}
+  .news-item{border-left:3px solid var(--accent); padding:5px 0 5px 10px; font-size:.85rem;}
+  .news-item .date{font-family:var(--font-mono); font-size:.66rem; color:var(--ink-faint); display:block;}
+  .foot-note{font-size:.78rem; color:var(--ink-faint); text-align:center; padding-top:4px;}
+</style>
+
+<div class="wrap">
+  <div class="banner" id="readonlyBanner" hidden>Esta vista no tiene acceso a almacenamiento persistente ahora mismo: los cambios no se guardarán entre visitas ni se sincronizarán con otros equipos.</div>
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Oposición · Biología y Geología · convocatoria Andalucía</p>
+      <h1>Bitácora Bio-Geo</h1>
+      <p class="hero-sync"><span class="dot"></span><span id="syncLabel">Guardado en la nube — accesible desde cualquier equipo</span></p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-big">
+        <span class="num num-mono" id="daysToExam">—</span>
+        <span class="label">días hasta el examen</span>
+      </div>
+      <div class="stat-ring">
+        <svg viewBox="0 0 120 120">
+          <circle class="ring-track" cx="60" cy="60" r="50"></circle>
+          <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="50"></circle>
+        </svg>
+        <div class="ring-label"><span id="probPct">0%</span><small>sorteo a tu favor</small></div>
+      </div>
+      <p class="ring-caption">Probabilidad de que, al sortear 4 temas de los 75, al menos uno esté entre los que dominas (art. 21.1.B, RD 276/2007). No mide si lo desarrollarás bien.</p>
+      <div class="stat-mini-group" id="statsMiniGroup"></div>
+    </div>
+    <details class="config-panel">
+      <summary>Ajustes de la convocatoria</summary>
+      <div class="config-row">
+        <label>Fecha del examen (1ª prueba)<input type="date" id="examDateInput"></label>
+        <label>Días de reserva final (solo repaso)<input type="number" id="reserveDaysInput" min="0" max="180" step="1"></label>
+        <label>Inicio real de estudio<input type="date" id="studyStartInput"></label>
+      </div>
+      <p class="config-note" id="deadlineNote"></p>
+      <button type="button" class="export-btn" id="exportBtn">Exportar copia de seguridad (.json)</button>
+    </details>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button type="button" class="tab-btn active" data-tab="hoy">Hoy</button>
+    <button type="button" class="tab-btn" data-tab="calendario">Calendario</button>
+    <button type="button" class="tab-btn" data-tab="temario">Temario</button>
+    <button type="button" class="tab-btn" data-tab="disponibilidad">Disponibilidad</button>
+    <button type="button" class="tab-btn" data-tab="programacion">Programación</button>
+    <button type="button" class="tab-btn" data-tab="practica">Práctica</button>
+    <button type="button" class="tab-btn" data-tab="normativa">Normativa</button>
+  </nav>
+
+  <section class="tabpanel" id="panel-hoy">
+    <div class="card">
+      <h2>Hoy <span class="badge" id="todayCount">0</span></h2>
+      <p class="method-note">Repetición espaciada (SM-2) + recuerdo activo + entrelazado teoría/práctica — sobre la curva del olvido de Ebbinghaus.</p>
+      <div class="hoy-nav">
+        <button type="button" id="hoyPrev">‹ Día anterior</button>
+        <span class="hoy-date" id="hoyDateLabel"></span>
+        <button type="button" id="hoyNext">Día siguiente ›</button>
+        <button type="button" id="hoyToday" class="hoy-today-btn" hidden>Volver a hoy</button>
+      </div>
+      <p class="method-note">¿Se te olvidó apuntar un día? Muévete a ese día con las flechas y regístralo ahí; el plan se reajusta solo.</p>
+      <div class="pace-banner" id="paceBanner"></div>
+      <p class="empty-note" id="studyNotStarted" hidden></p>
+
+      <p class="subhead" id="reviewsSubhead">Repasos de temario</p>
+      <div class="today-list" id="todayReviews"></div>
+
+      <p class="subhead" id="valorarSubhead">Primera valoración</p>
+      <div class="today-list" id="todayValorar"></div>
+
+      <p class="subhead" id="newSubhead">Sesiones de estudio</p>
+      <div class="today-list" id="todayNew"></div>
+
+      <p class="subhead" id="practicaSubhead">Práctica</p>
+      <div class="today-list" id="todayPractica"></div>
+
+      <p class="subhead" id="progSubhead">Programación didáctica</p>
+      <div class="today-list" id="todayProg"></div>
+
+      <p class="subhead" id="customSubhead">Tareas añadidas</p>
+      <div class="today-list" id="todayCustom"></div>
+
+      <div class="add-task-box">
+        <button type="button" id="addTaskToggle" class="btn-reveal">+ Añadir tarea no programada</button>
+        <form id="addTaskForm" class="add-task-form" hidden>
+          <select id="addTaskType">
+            <option value="repaso-tema">Repaso extra de un tema</option>
+            <option value="libre">Tarea libre</option>
+          </select>
+          <select id="addTaskTema"></select>
+          <input type="text" id="addTaskText" placeholder="Describe la tarea" hidden>
+          <input type="date" id="addTaskDate">
+          <button type="submit">Añadir</button>
+        </form>
+      </div>
+
+      <p class="empty-note" id="todayEmpty" hidden>Nada programado para este día. Selecciona temas en «Temario» o añade una tarea.</p>
+    </div>
+  </section>
+
+  <section class="tabpanel" id="panel-calendario" hidden>
+    <div class="card">
+      <div class="cal-head">
+        <h2>Calendario</h2>
+        <div class="cal-nav">
+          <button type="button" id="calPrev">‹ Mes anterior</button>
+          <button type="button" id="calToday">Hoy</button>
+          <button type="button" id="calNext">Mes siguiente ›</button>
+        </div>
+      </div>
+      <p class="cal-title" id="calTitle"></p>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-legend">
+        <span><span class="cal-dot review"></span>repaso</span>
+        <span><span class="cal-dot newd"></span>sesión de estudio</span>
+        <span><span class="cal-dot practica"></span>práctica</span>
+        <span><span class="cal-dot prog"></span>programación</span>
+        <span>🎓 examen</span>
+        <span>🚫 festivo marcado</span>
+      </div>
+      <div class="agenda" id="agenda"></div>
+    </div>
+  </section>
+
+  <section class="tabpanel" id="panel-temario" hidden>
+    <div class="card">
+      <h2>Temario oficial <span class="sub">75 temas · Biología y Geología</span></h2>
+      <div class="prob-summary">
+        <span class="big" id="temarioSelectedCount">0 / 75 seleccionados</span>
+        <p>Marca los temas que vas a preparar. La probabilidad del sorteo (arriba) y el plan de estudio se recalculan solos con cada cambio.</p>
+      </div>
+      <p class="temario-legend"><span class="practica-mark">*</span> el tema aporta base directa para la parte práctica (identificación, mapas y cortes, problemas de genética/ecología o laboratorio) — pasa el ratón o el dedo sobre el asterisco para ver cuál.</p>
+      <div id="bloquesContainer" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+  </section>
+
+  <section class="tabpanel" id="panel-disponibilidad" hidden>
+    <div class="card">
+      <h2>Disponibilidad de estudio</h2>
+      <p class="method-note">Define cuánto tiempo puedes dedicar de verdad. Con esto la app calcula cuántas sesiones necesita cada tema y si tu plan llega a tiempo — y lo recalcula solo si cambias algo o te retrasas.</p>
+      <div class="prog-config">
+        <label>Horas por tema (referencia)<input type="number" id="hoursPerTemaInput" min="1" max="40" step="0.5"></label>
+        <label>Duración de una sesión (h)<input type="number" id="hoursPerSessionInput" min="0.5" max="6" step="0.5"></label>
+      </div>
+      <p class="config-note">Orientativo según ritmos habituales citados por academias y opositores (≈2-3 temas nuevos/semana con dedicación media ⇒ ≈9h por tema). El peso real de cada tema se ajusta ligeramente según su amplitud.</p>
+
+      <p class="subhead">Días de la semana y horas disponibles</p>
+      <div class="weekly-table" id="weeklyTable"></div>
+
+      <p class="subhead">Días festivos o sin estudio</p>
+      <div class="cal-head">
+        <p class="cal-title" id="availCalTitle" style="margin:0;"></p>
+        <div class="cal-nav">
+          <button type="button" id="availPrev">‹</button>
+          <button type="button" id="availToday">Hoy</button>
+          <button type="button" id="availNext">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="availGrid"></div>
+      <p class="method-note" style="margin-top:2px;">Toca un día para marcarlo o desmarcarlo como festivo/sin estudio.</p>
+      <div class="holiday-chip-list" id="holidayChips"></div>
+    </div>
+  </section>
+
+  <section class="tabpanel" id="panel-programacion" hidden>
+    <div class="card">
+      <h2>Programación didáctica <span class="sub">2ª prueba, parte A</span></h2>
+      <p class="method-note">Mínimo 12 unidades didácticas para un curso completo; defensa oral de ≈30 min (30% de la nota de esta prueba). Empezar con meses de margen evita improvisar el borrador final la última semana.</p>
+      <div class="prog-config">
+        <label>Inicio de la redacción<input type="date" id="progStartInput"></label>
+        <label>Fecha límite / defensa<input type="date" id="progDeadlineInput"></label>
+        <label>Nº de unidades didácticas<input type="number" id="numUDsInput" min="6" max="20" step="1"></label>
+      </div>
+      <div class="prog-progress-wrap">
+        <div class="prog-progress"><div id="progBar" style="width:0%"></div></div>
+        <span class="prog-progress-label" id="progLabel">0 / 0</span>
+      </div>
+      <div class="checklist" id="progChecklist"></div>
+    </div>
+  </section>
+
+  <section class="tabpanel" id="panel-practica" hidden>
+    <div class="card">
+      <h2>Bloques de práctica</h2>
+      <p class="method-note">La parte A de la primera prueba es un ejercicio práctico: se entrena por separado y de forma continua, porque la destreza procedimental se olvida distinto que la memoria de datos.</p>
+      <div class="today-list" id="practicaList"></div>
+    </div>
+  </section>
+
+  <section class="tabpanel" id="panel-normativa" hidden>
+    <div class="card">
+      <h2>Referencia normativa y noticias</h2>
+      <div class="normativa-block">
+        <h3>Estructura de la 1ª prueba</h3>
+        <p>Parte A, práctica: ejercicios de identificación (rocas, minerales, fósiles), problemas de genética y ecología, interpretación de mapas y cortes geológicos, y diseño de una actividad de laboratorio con sus normas de seguridad. Parte B, escrita: el tribunal extrae al azar 4 temas del temario (por tener más de 50) y desarrollas por escrito el que elijas de esos 4, en un máximo de 2h15. Ambas partes deben promediar ≥5 y ninguna bajar de 2,5.</p>
+        <p class="cite">RD 276/2007, art. 21.1.B (extracción proporcional al tamaño del temario: ≤25→2 extraídos, 26-50→3, &gt;50→4).</p>
+      </div>
+      <div class="normativa-block">
+        <h3>Estructura de la 2ª prueba</h3>
+        <p>Parte A (30%): presentas y defiendes oralmente tu programación didáctica (mínimo 12 unidades didácticas, un curso completo, defensa ≈30 min). Parte B (70%): preparas en 1h y expones en 30 min una unidad didáctica elegida entre 3 sorteadas por el tribunal.</p>
+      </div>
+      <div class="normativa-block">
+        <h3>Bolsas docentes en Andalucía</h3>
+        <p>Acceso ordinario (art. 19, Decreto 302/2010): basta haber superado alguna prueba de la última convocatoria andaluza sin plaza; no exige titulación de la especialidad. Acceso extraordinario (art. 41): sí exige la titulación del Anexo III. Orden de prelación: interinidad por tiempo de servicio en Andalucía, calificación del último proceso, convocatorias anteriores y, por último, extraordinarias.</p>
+        <p class="cite">Decreto 302/2010 (mod. 311/2012 y 109/2016), Orden de 10 de junio de 2020.</p>
+      </div>
+      <div class="normativa-block">
+        <h3>Baremo de la fase de concurso</h3>
+        <p>Experiencia docente: máx. 5 puntos (1,0000/año en la especialidad en centro público; Madrid puntúa igual que Andalucía). Formación académica: máx. 5 puntos (doctorado 1,0; cada máster oficial 1,0; expediente hasta 1,5). Otros méritos: máx. 2 puntos. Ponderación final: 2/3 oposición + 1/3 concurso.</p>
+        <p class="cite">Anexo II, Orden de 20 de febrero de 2026 (BOJA 38, C1, 25/02/2026).</p>
+      </div>
+      <div class="normativa-block">
+        <h3>Currículo LOMLOE — marco estatal</h3>
+        <p>La LOMLOE (Ley Orgánica 3/2020) se despliega por etapa en dos reales decretos de enseñanzas mínimas que sustituyen el modelo de "estándares de aprendizaje" de la LOMCE por competencias específicas, saberes básicos y criterios de evaluación por materia.</p>
+        <p class="links">
+          <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2022-4975" target="_blank" rel="noopener">RD 217/2022, ESO (BOE)</a>
+          <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2022-5521" target="_blank" rel="noopener">RD 243/2022, Bachillerato (BOE)</a>
+        </p>
+      </div>
+      <div class="normativa-block">
+        <h3>Currículo LOMLOE en Andalucía</h3>
+        <p>Andalucía desarrolla ambos decretos estatales con normativa propia: un decreto de ordenación general por etapa y una orden que detalla, materia por materia —Biología y Geología incluida—, sus saberes básicos y criterios de evaluación.</p>
+        <p class="links">
+          <a href="https://www.juntadeandalucia.es/boja/2023/90/3" target="_blank" rel="noopener">Decreto 102/2023, ESO (BOJA)</a>
+          <a href="https://www.juntadeandalucia.es/boja/2023/104/36" target="_blank" rel="noopener">Orden 30/05/2023, ESO (BOJA)</a>
+          <a href="https://www.juntadeandalucia.es/boja/2023/90/4" target="_blank" rel="noopener">Decreto 103/2023, Bachillerato (BOJA)</a>
+          <a href="https://www.juntadeandalucia.es/boja/2023/104/37" target="_blank" rel="noopener">Orden 30/05/2023, Bachillerato (BOJA)</a>
+        </p>
+        <p class="cite">Ambos decretos y órdenes son de 9 de mayo y 30 de mayo de 2023 respectivamente.</p>
+      </div>
+      <div class="normativa-block">
+        <h3>Biología y Geología: qué mirar para tu programación</h3>
+        <p>Para la programación didáctica y la unidad didáctica te examinan de cómo trasladas este currículo al aula. La materia tiene, aproximadamente, 6 competencias específicas transversales a toda la etapa (razonamiento científico, no memorización aislada); saberes básicos organizados por bloques y curso —en ESO, por ejemplo, célula y método científico en 1º, geosfera dinámica y clasificación de seres vivos en 2º, anatomía y salud en 3º, y genética, evolución, tectónica de placas y cambio climático en la optativa de 4º—; y del orden de 20-22 criterios de evaluación por curso en ESO (12-15 en Bachillerato), que sustituyen a los antiguos estándares.</p>
+        <p class="links"><a href="https://www.juntadeandalucia.es/educacion/portals/delegate/content/0f0b2cfa-4783-493e-932c-f56bb9314cc7/BIOLOG%C3%8DA%20Y%20GEOLOG%C3%8DA" target="_blank" rel="noopener">Portal de la Junta: recursos de Biología y Geología</a></p>
+        <p class="normativa-caveat">Los bloques y el número de competencias/criterios son un resumen de fuentes docentes, no el texto legal íntegro — antes de redactar tu programación consulta directamente el anexo de la materia en la orden curricular de tu etapa (enlaces arriba).</p>
+      </div>
+      <p class="subhead">Noticias y contexto</p>
+      <div class="news-item"><span class="date">sept. 2026</span>La convocatoria andaluza de 2026 ofertó 5.047 plazas pero no incluyó Biología y Geología; la anterior convocatoria de la especialidad (2025) sacó 379 plazas — de ahí la previsión de que vuelva a salir en 2027.</div>
+      <div class="news-item"><span class="date">sept. 2026</span>El marco estatal (RD 276/2007) sigue vigente para el procedimiento de extracción de temas; verifica cada año si la orden de convocatoria andaluza introduce alguna particularidad.</div>
+      <p class="normativa-caveat">Datos verificados en fuentes públicas (BOE/BOJA y guías de oposiciones) en septiembre de 2026 — compruébalos contra la convocatoria oficial antes de tomar decisiones importantes. Esta sección no se actualiza sola: pide a Claude que la revise de nuevo cuando quieras noticias más recientes.</p>
+    </div>
+  </section>
+
+  <p class="foot-note">Repetición espaciada según el algoritmo SM-2 (Woźniak / SuperMemo) sobre la curva del olvido de Ebbinghaus. El progreso se guarda automáticamente en la nube.</p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------- temario oficial (75 temas, RD 276/2007 / especialidad Biología y Geología) ----------------
+  var TEMARIO_TITLES = [
+    "La Tierra en el universo. Geología de los planetas. Origen de la Tierra y del Sistema Solar.",
+    "Estructura y composición de la Tierra. Los métodos de estudio.",
+    "La materia mineral y la materia cristalina. Propiedades y métodos de estudio.",
+    "Las rocas ígneas más importantes.",
+    "Las rocas metamórficas más importantes.",
+    "Los ambientes sedimentarios. Litogénesis. Las rocas sedimentarias más importantes.",
+    "Minerales petrogenéticos. Minerales y rocas de interés económico.",
+    "Los impactos ambientales del aprovechamiento de los recursos geológicos.",
+    "Las teorías orogénicas. Deriva continental y tectónica de placas.",
+    "Interpretación global de los fenómenos geológicos en el marco de la teoría de la tectónica de placas.",
+    "La atmósfera: estructura, composición y dinámica. La contaminación atmosférica. Métodos de determinación y de corrección.",
+    "La hidrosfera. El ciclo del agua. La contaminación del agua. Métodos de análisis y depuración. El problema de la escasez de agua.",
+    "El equilibrio térmico del planeta. El clima y su distribución. Los sistemas morfoclimáticos. Grandes cambios climáticos históricos.",
+    "Geomorfología. Los factores condicionantes del modelado del relieve. La importancia de la litología y las estructuras geológicas.",
+    "El modelado de las zonas áridas. El problema de la desertización. Medidas de prevención y corrección.",
+    "El modelado fluvial, costero y glacial. Las aguas subterráneas. Los impactos en las costas.",
+    "El suelo: origen, estructura y composición. La utilización del suelo. La contaminación del suelo. Métodos de análisis del suelo.",
+    "La Tierra, un planeta en continuo cambio. Los fósiles como indicadores. El tiempo geológico. Explicaciones históricas al problema de los cambios.",
+    "La historia geológica de la Tierra. Fauna y flora fósiles.",
+    "La investigación geológica y sus métodos. Fundamentos y utilidad de la fotografía aérea, el mapa topográfico y el mapa geológico. Importancia de la geología en la búsqueda de recursos y en las obras públicas.",
+    "La constitución geológica de España. Repercusiones de la geología en la variedad de paisajes, distribución de recursos, las comunicaciones y la industria. El problema de los riesgos. La ordenación del territorio.",
+    "El origen de la vida y su interpretación histórica. Evolución precelular. La teoría celular y la organización de los seres vivos.",
+    "La base química de la vida: componentes inorgánicos y orgánicos. El agua y las sales minerales. Los glúcidos y los lípidos. Su biosíntesis.",
+    "Aminoácidos y proteínas. Biosíntesis proteica. Enzimas y coenzimas. Las vitaminas.",
+    "Los ácidos nucleicos. Replicación y transcripción.",
+    "Métodos de estudio de la célula. Células procariontas y eucariontas. La célula animal y vegetal. Formas acelulares.",
+    "La membrana plasmática y la pared celular. Citosol, citoesqueleto. Sistemas de membranas y orgánulos. Motilidad celular.",
+    "Necesidades energéticas de la célula. La respiración celular aerobia y anaerobia. La fotosíntesis. La quimiosíntesis.",
+    "El núcleo interfásico y el núcleo en división. El ciclo celular y la división celular. Mitosis y meiosis.",
+    "Niveles de organización de los seres vivos. La diferenciación celular. Tejidos animales y vegetales.",
+    "La reproducción asexual y la reproducción sexual. Genética del sexo. Gametogénesis. Fecundación y desarrollo embrionario en metazoos. Ciclos biológicos.",
+    "La clasificación de los seres vivos. Taxonomía y nomenclatura. Los cinco reinos, relaciones evolutivas. Los virus y su patología. Otras formas acelulares.",
+    "Reino moneras. Las cyanophytas. Las bacterias y su importancia en la sanidad. La industria y la investigación básica.",
+    "Reino protoctistas. Géneros más comunes en charcas, ríos y mares. El papel ecológico y su importancia económica y sanitaria.",
+    "Reino hongos. Hongos comunes en nuestros campos y bosques. Importancia en los ecosistemas. Aplicaciones y utilidad. Los líquenes. Su papel como indicadores.",
+    "Las plantas I. Briofitas. Géneros comunes e importancia ecológica. El paso a la vascularidad: licopodios, equisetos y helechos. La adquisición de semillas: cicadófitos y ginkófitos.",
+    "Las plantas II. Coniferófitos y angioespermatófitos. Caracteres generales, origen, clasificación y ecología. Familias y especies de árboles y arbustos españoles más representativos. La destrucción de los bosques. La repoblación y las medidas preventivas.",
+    "Morfología y fisiología de las estructuras vegetativas y reproductoras de las cormófitas.",
+    "La agricultura en España. El impacto ambiental de la sobreexplotación. Nuevas alternativas para la obtención de recursos alimentarios.",
+    "Invertebrados no artrópodos: fila poríferos cnidarios, ctenóforos, platelmintos, anélidos moluscos y equipodermos. Especies representativas de nuestra fauna. Importancia económica, sanitaria y alimentaria.",
+    "Invertebrados artrópodos. Insectos, crustáceos, arácnidos y miriápodos. Especies representativas de nuestra fauna. Importancia económica, sanitaria y alimentaria.",
+    "Filum cordados. Caracteres generales y clasificación. Los vertebrados: características generales y clasificación. Agnatos y condrictios.",
+    "Órganos y funciones de nutrición en los vertebrados.",
+    "Órganos y funciones de relación en los vertebrados.",
+    "Órganos y funciones de reproducción en los vertebrados.",
+    "Otros recursos bióticos. Aprovechamiento medicinal, ornamental, agropecuario, avícola, pesquero. La biotecnología.",
+    "Ecología. Poblaciones, comunidades y ecosistemas. Dinámica de las poblaciones. Interacciones en el ecosistema. Relaciones intra e interespecíficas.",
+    "El ecosistema en acción. Estructura, funcionamiento y autorregulación del ecosistema.",
+    "El paisaje: componentes e interpretación. Paisajes españoles característicos. El paisaje como recurso estético. Impactos en el paisaje. Espacios protegidos.",
+    "Los impactos ambientales de las actividades humanas. Los grandes impactos globales.",
+    "Los problemas ambientales y sus repercusiones políticas, económicas y sociales. Salud ambiental y calidad de vida. La educación ambiental.",
+    "Anatomía y fisiología de los aparatos digestivo y urinario humanos. Hábitos saludables. Principales enfermedades.",
+    "Anatomía y fisiología de los sistemas circulatorio y respiratorio humanos. Hábitos saludables. Principales enfermedades.",
+    "Nutrición y alimentación. Hábitos saludables. Principales enfermedades. Las personas como consumidores.",
+    "El medio interno: sangre, linfa y líquidos intersticiales. Hábitos saludables. Principales enfermedades.",
+    "Anatomía y fisiología del sistema nervioso humano. Alteraciones del sistema nervioso en la sociedad actual. Hábitos saludables. La salud mental.",
+    "Anatomía y fisiología de los órganos de los sentidos en el ser humano. Hábitos saludables y principales enfermedades.",
+    "Anatomía y fisiología del sistema endocrino. Regulación neuroendocrina. Principales alteraciones.",
+    "Anatomía y fisiología del aparato locomotor. Hábitos posturales adecuados y principales enfermedades.",
+    "Los cambios corporales a lo largo de la vida. La sexualidad y la reproducción. Anatomía y fisiología de los aparatos reproductores. Hábitos saludables y principales enfermedades.",
+    "La salud y la enfermedad. Evolución del concepto de salud. Las enfermedades de nuestro tiempo. La drogodependencia. Estilos de vida saludables.",
+    "El sistema inmunológico. La inmunodeficiencia. Los sueros y las vacunas: descubrimiento histórico e importancia sanitaria y económica.",
+    "La genética mendeliana. La teoría cromosómica de la herencia. Las mutaciones.",
+    "La genética molecular. La ingeniería genética y sus aplicaciones. Su dimensión ética.",
+    "La naturaleza de la evolución. Mecanismos y pruebas. Principales teorías.",
+    "Evolución de la concepción de Ciencia. Las revoluciones científicas y los cambios de paradigmas en la Biología y la Geología. La ciencia como proceso en construcción. Los científicos y sus condicionamientos sociales. Las actitudes científicas en la vida cotidiana.",
+    "Momentos claves en la historia de la Biología y la Geología. La Biología y la Geología españolas en el contexto mundial. Principales áreas de investigación actual. Las relaciones Ciencia/Tecnología/Sociedad en la Biología y Geología.",
+    "Sistemas materiales. Propiedades generales y específicas. Aplicaciones. Comportamiento de los gases. Estructura de la materia. Teoría cinética y teoría atomicomolecular. Papel de los modelos y de las teorías.",
+    "Clasificación de los elementos químicos. Sistema periódico. Enlace químico. Justificación de las propiedades de las sustancias en función de su enlace. Reconocimiento de sustancias de uso común como ácidos, bases, metales, etc.",
+    "Cambios en la materia. Reacciones químicas. Intercambios energéticos. Estequiometría. Factores que afectan al desarrollo de las reacciones. Su importancia en la evolución de la sociedad.",
+    "Estudio del movimiento. Fuerzas, efectos sobre los cuerpos. Leyes de Newton. Estática de los cuerpos rígidos. Condiciones de equilibrio. Estática de fluidos.",
+    "El problema de la posición de la Tierra en el universo. Sistemas geocéntrico y heliocéntrico. Gravitación universal. Peso de los cuerpos. Importancia histórica de la unificación de la gravedad terrestre y celeste.",
+    "La energía. Transformación, conservación y degradación. Trabajo y calor, procesos de transferencia de energía. Efectos y propagación del calor. Propagación de energía sin transporte de masa: movimiento ondulatorio. Luz y sonido.",
+    "Naturaleza eléctrica de la materia. Corriente eléctrica. Electromagnetismo. Inducción electromagnética. La energía eléctrica: una forma privilegiada de energía. Evolución en las necesidades energéticas de la sociedad. Energías alternativas.",
+    "El trabajo experimental en el área de ciencias. Utilización del laboratorio escolar. Norma de seguridad."
+  ];
+
+  function bloqueFor(n){
+    if(n<=21) return "Geología";
+    if(n<=46) return "Biología general y reinos";
+    if(n<=51) return "Ecología y medio ambiente";
+    if(n<=62) return "Biología humana y salud";
+    if(n<=65) return "Genética y evolución";
+    if(n<=67) return "Historia y epistemología de la ciencia";
+    if(n<=74) return "Física y Química";
+    return "Trabajo experimental";
+  }
+  var BLOQUE_ORDER = ["Geología","Biología general y reinos","Ecología y medio ambiente","Biología humana y salud","Genética y evolución","Historia y epistemología de la ciencia","Física y Química","Trabajo experimental"];
+
+  // Temas con aplicación directa en los ejercicios de la parte práctica (identificación visu,
+  // mapas/cortes geológicos, problemas de genética, problemas de ecología/geología, laboratorio).
+  // Marca orientativa basada en el tipo de ejercicios habituales de esta prueba — contrástala con
+  // exámenes de convocatorias anteriores de tu comunidad.
+  var PRACTICA_TEMAS = {
+    3:'visu', 4:'visu', 5:'visu', 6:'visu', 7:'visu',
+    10:'mapas', 14:'mapas', 18:'visu', 19:'visu', 20:'mapas', 21:'mapas',
+    32:'visu', 33:'visu', 34:'visu', 35:'visu', 36:'visu', 37:'visu', 40:'visu', 41:'visu', 42:'visu',
+    47:'ecologia', 48:'ecologia',
+    63:'genetica', 64:'genetica',
+    75:'laboratorio'
+  };
+
+  var TEMARIO = TEMARIO_TITLES.map(function(title, i){
+    var n = i+1;
+    return { id: 't' + String(n).padStart(2,'0'), n: n, title: title, bloque: bloqueFor(n), practicaTag: PRACTICA_TEMAS[n] || null };
+  });
+  var TEMARIO_BY_ID = {};
+  TEMARIO.forEach(function(t){ TEMARIO_BY_ID[t.id] = t; });
+
+  var PRACTICA_CATALOG = [
+    { id:'visu', label:'Identificación de rocas, minerales, fósiles, plantas y animales', desc:'Reconocimiento visual (visu) sin herramientas de apoyo.' },
+    { id:'mapas', label:'Mapas y cortes geológicos', desc:'Interpretación de mapas topográficos/geológicos y construcción de cortes.' },
+    { id:'genetica', label:'Problemas de genética', desc:'Genética mendeliana, molecular y problemas de herencia.' },
+    { id:'ecologia', label:'Problemas de ecología y geología', desc:'Cadenas tróficas, ciclos biogeoquímicos, dinámica de poblaciones, procesos geológicos.' },
+    { id:'laboratorio', label:'Diseño de actividades de laboratorio', desc:'Planificación de una práctica escolar: materiales, procedimiento y normas de seguridad.' }
+  ];
+  var PRACTICA_BY_ID = {};
+  PRACTICA_CATALOG.forEach(function(p){ PRACTICA_BY_ID[p.id] = p; });
+
+  var PROG_BEFORE = [
+    { id:'marco', label:'Marco legal y contextualización del centro' },
+    { id:'objetivos', label:'Objetivos generales de etapa y de la materia' },
+    { id:'competencias', label:'Competencias clave y su concreción' },
+    { id:'metodologia', label:'Metodología didáctica y agrupamientos' },
+    { id:'diversidad', label:'Atención a la diversidad y al alumnado NEAE' }
+  ];
+  var PROG_AFTER = [
+    { id:'evaluacion', label:'Evaluación: criterios, instrumentos y recuperación' },
+    { id:'actividades', label:'Actividades complementarias y extraescolares' },
+    { id:'tic', label:'Plan de lectura y uso de las TIC' },
+    { id:'defensa', label:'Revisión completa y ensayo de la defensa oral' }
+  ];
+
+  // ---------------- date / math helpers ----------------
+  function todayISO(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function parseISO(iso){ var p=iso.split('-').map(Number); return Date.UTC(p[0],p[1]-1,p[2]); }
+  function toISO(ms){ var d=new Date(ms); return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0'); }
+  function addDays(iso,n){ return toISO(parseISO(iso)+n*86400000); }
+  function daysBetween(a,b){ return Math.round((parseISO(b)-parseISO(a))/86400000); }
+  function fmtDateEs(iso){ if(!iso) return '—'; var p=iso.split('-').map(Number); var d=new Date(Date.UTC(p[0],p[1]-1,p[2])); return d.toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}); }
+  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function comb(n,k){ if(k<0||k>n) return 0; k=Math.min(k,n-k); var r=1; for(var i=1;i<=k;i++){ r = r*(n-k+i)/i; } return r; }
+  function probAtLeastOne(N,K,drawn){ if(K<=0) return 0; var notKnown=N-K; var pNone = comb(notKnown,drawn)/comb(N,drawn); return clamp(1-pNone,0,1); }
+
+  // Peso orientativo del "coste" de un tema según la amplitud de su título (heurística, no un dato
+  // oficial): un tema con un título largo y con muchos subapartados suele llevar más tiempo que uno corto.
+  var AVG_TEMA_WORDS = TEMARIO_TITLES.reduce(function(s,t){ return s + t.split(/\s+/).length; }, 0) / TEMARIO_TITLES.length;
+  function pesoOf(t){ var w = t.title.split(/\s+/).length; return clamp(w/AVG_TEMA_WORDS, 0.6, 1.6); }
+  function sessionsNeededFor(t, cfg){ return Math.max(1, Math.round(cfg.hoursPerTemaBase*pesoOf(t)/cfg.hoursPerSession)); }
+
+  function nextSchedule(sr, quality, today, maxInterval){
+    var reps=sr.reps||0, ef=sr.ef||2.5, interval=sr.interval||0;
+    if(quality<3){ reps=0; interval=1; }
+    else {
+      if(reps===0) interval=1;
+      else if(reps===1) interval=6;
+      else interval=Math.max(1, Math.round(interval*ef));
+      reps+=1;
+    }
+    ef = ef + (0.1-(5-quality)*(0.08+(5-quality)*0.02));
+    ef = Math.round(clamp(ef,1.3,3.2)*100)/100;
+    if(maxInterval) interval = Math.min(interval, maxInterval);
+    return { reps:reps, ef:ef, interval:interval, nextReview:addDays(today,interval), lastReview:today, lastQuality:quality };
+  }
+  function estadoOf(sr){ if(!sr.lastReview) return 'nuevo'; if(sr.interval>=21) return 'dominado'; return 'en_progreso'; }
+  var ESTADO_LABEL = { nuevo:'Nuevo', estudiando:'Estudiando', valorar:'Por valorar', en_progreso:'En progreso', dominado:'Dominado' };
+  function isDue(sr, today){ return !sr.nextReview || sr.nextReview<=today; }
+
+  var WEEKDAY_KEYS = ['sun','mon','tue','wed','thu','fri','sat']; // index = getUTCDay()
+  var WEEKDAY_ORDER = ['mon','tue','wed','thu','fri','sat','sun'];
+  var WEEKDAY_LABELS = { mon:'Lunes', tue:'Martes', wed:'Miércoles', thu:'Jueves', fri:'Viernes', sat:'Sábado', sun:'Domingo' };
+
+  function capacityHoursFor(iso){
+    if(state.config.holidays.indexOf(iso)!==-1) return 0;
+    var dow = new Date(parseISO(iso)).getUTCDay();
+    var w = state.config.weekly[WEEKDAY_KEYS[dow]];
+    return (w && w.on) ? (Number(w.hours)||0) : 0;
+  }
+  function sessionsCapacityFor(iso){ var h=capacityHoursFor(iso); return state.config.hoursPerSession>0 ? h/state.config.hoursPerSession : 0; }
+
+  // ---------------- default state ----------------
+  function defaultSR(){ return { reps:0, ef:2.5, interval:0, nextReview:null, lastReview:null, lastQuality:null }; }
+  function defaultStudy(){ return { sessionsDone:0 }; }
+  function freshState(){
+    var today = todayISO();
+    var temas = {};
+    TEMARIO.forEach(function(t){ temas[t.id] = { selected:false, sr:defaultSR(), history:[], study:defaultStudy(), confidence:null }; });
+    var practica = {};
+    PRACTICA_CATALOG.forEach(function(p){ practica[p.id] = { sr:defaultSR(), history:[] }; });
+    return {
+      schemaVersion: 4,
+      config: {
+        examDate:'2027-05-15', reserveDays:21, studyStart:today, progStart:today, progDeadline:addDays('2027-05-15',-14), numUDs:12,
+        hoursPerTemaBase:9, hoursPerSession:2,
+        weekly: { mon:{on:true,hours:1.5}, tue:{on:true,hours:1.5}, wed:{on:true,hours:1.5}, thu:{on:true,hours:1.5}, fri:{on:true,hours:1}, sat:{on:true,hours:4}, sun:{on:true,hours:3.5} },
+        holidays: []
+      },
+      temas: temas,
+      practica: practica,
+      programacion: { doneMap:{} },
+      customTasks: []
+    };
+  }
+  function ensureShape(s){
+    if(!s || Array.isArray(s.temas)) return freshState();
+    s.schemaVersion = 4;
+    s.config = s.config || {};
+    var fresh = freshState();
+    Object.keys(fresh.config).forEach(function(k){ if(s.config[k]===undefined || s.config[k]===null) s.config[k]=fresh.config[k]; });
+    s.config.weekly = s.config.weekly || {};
+    WEEKDAY_ORDER.forEach(function(k){ if(!s.config.weekly[k]) s.config.weekly[k] = fresh.config.weekly[k]; });
+    s.config.holidays = Array.isArray(s.config.holidays) ? s.config.holidays : [];
+
+    s.temas = s.temas || {};
+    TEMARIO.forEach(function(t){
+      if(!s.temas[t.id]){ s.temas[t.id] = { selected:false, sr:defaultSR(), history:[], study:defaultStudy(), confidence:null }; }
+      else {
+        var te = s.temas[t.id];
+        te.sr = te.sr || defaultSR();
+        te.history = te.history || [];
+        te.selected = !!te.selected;
+        if(!te.study){ te.study = { sessionsDone: te.sr.lastReview ? sessionsNeededFor(t, s.config) : 0 }; }
+        te.confidence = (typeof te.confidence==='number') ? te.confidence : null;
+      }
+    });
+    s.practica = s.practica || {};
+    PRACTICA_CATALOG.forEach(function(p){ if(!s.practica[p.id]) s.practica[p.id] = { sr:defaultSR(), history:[] }; else { s.practica[p.id].sr = s.practica[p.id].sr || defaultSR(); s.practica[p.id].history = s.practica[p.id].history || []; } });
+    s.programacion = s.programacion || { doneMap:{} };
+    s.programacion.doneMap = s.programacion.doneMap || {};
+    s.customTasks = Array.isArray(s.customTasks) ? s.customTasks : [];
+    return s;
+  }
+
+  function selectedTemaIds(){ return TEMARIO.filter(function(t){ return state.temas[t.id].selected; }).map(function(t){ return t.id; }); }
+  function deadlineISO(cfg){ return addDays(cfg.examDate, -Math.abs(cfg.reserveDays||0)); }
+
+  function temaStatus(id){
+    var t = TEMARIO_BY_ID[id], ts = state.temas[id];
+    if(ts.sr.lastReview) return estadoOf(ts.sr);
+    var need = sessionsNeededFor(t, state.config);
+    if(ts.study.sessionsDone<=0) return 'nuevo';
+    if(ts.study.sessionsDone<need) return 'estudiando';
+    return 'valorar';
+  }
+
+  var WIP_LIMIT = 2;
+  function getActiveStudyIds(){
+    var today = todayISO();
+    if(today < state.config.studyStart) return [];
+    var sel = selectedTemaIds();
+    var inProgress = sel.filter(function(id){ return temaStatus(id)==='estudiando'; })
+      .sort(function(a,b){ return TEMARIO_BY_ID[a].n-TEMARIO_BY_ID[b].n; });
+    if(inProgress.length<WIP_LIMIT){
+      var pending = sel.filter(function(id){ return temaStatus(id)==='nuevo'; })
+        .sort(function(a,b){ return TEMARIO_BY_ID[a].n-TEMARIO_BY_ID[b].n; });
+      inProgress = inProgress.concat(pending.slice(0, WIP_LIMIT-inProgress.length));
+    }
+    return inProgress;
+  }
+  function getValorarIds(){
+    return selectedTemaIds().filter(function(id){ return temaStatus(id)==='valorar'; })
+      .sort(function(a,b){ return TEMARIO_BY_ID[a].n-TEMARIO_BY_ID[b].n; });
+  }
+
+  // Simulación completa del plan de estudio: reparte las sesiones que faltan entre los días
+  // disponibles (según Disponibilidad) desde hoy (o desde el inicio configurado) hasta que se
+  // terminan, sin cortarla en la fecha límite, para poder avisar si el plan no llega a tiempo.
+  function simulateStudyPlan(maxGuardDays){
+    var today = todayISO();
+    var start = today < state.config.studyStart ? state.config.studyStart : today;
+    var cfg = state.config;
+    var pendingIds = selectedTemaIds().filter(function(id){ return !state.temas[id].sr.lastReview; })
+      .sort(function(a,b){ return TEMARIO_BY_ID[a].n-TEMARIO_BY_ID[b].n; });
+    var remaining = {};
+    pendingIds.forEach(function(id){
+      var need = sessionsNeededFor(TEMARIO_BY_ID[id], cfg);
+      remaining[id] = Math.max(0, need - state.temas[id].study.sessionsDone);
+    });
+    var queue = pendingIds.filter(function(id){ return remaining[id]>0; });
+    var active = queue.slice(0, WIP_LIMIT);
+    queue = queue.slice(active.length);
+    var map = {};
+    var budget = 0;
+    var d = start, guard = 0, finishDate = null;
+    var maxGuard = maxGuardDays || 1500;
+    while((active.length>0 || queue.length>0) && guard<maxGuard){
+      budget += sessionsCapacityFor(d);
+      while(budget>=1 && active.length>0){
+        var id = active[0];
+        remaining[id] -= 1;
+        map[d] = map[d]||[];
+        var willFinish = remaining[id]<=0;
+        map[d].push({ id:id, willFinish:willFinish });
+        budget -= 1;
+        if(willFinish){
+          active.shift();
+          if(queue.length>0) active.push(queue.shift());
+          finishDate = d;
+        }
+      }
+      d = addDays(d,1); guard++;
+    }
+    var doneAll = (active.length===0 && queue.length===0);
+    return { byDate: map, finishDate: doneAll ? finishDate : null, incomplete: !doneAll };
+  }
+  function computePace(){
+    return {
+      sim: simulateStudyPlan(2000),
+      pending: selectedTemaIds().some(function(id){ return !state.temas[id].sr.lastReview; })
+    };
+  }
+
+  function progMilestoneList(){
+    var list = PROG_BEFORE.slice();
+    for(var i=1;i<=state.config.numUDs;i++){ list.push({ id:'ud'+i, label:'Unidad didáctica '+i }); }
+    return list.concat(PROG_AFTER);
+  }
+  // Reparte los hitos de programación solo entre días con horas de estudio disponibles de verdad
+  // (misma Disponibilidad — festivos y horario semanal — que usa el temario), y evita en lo posible
+  // los días que ya tienen una sesión de estudio de temario asignada. Si no caben todos los hitos
+  // antes de la fecha límite con esa disponibilidad, sigue repartiéndolos después de esa fecha en
+  // vez de amontonarlos en días sin horas.
+  function progScheduleWithDates(){
+    var list = progMilestoneList();
+    var m = list.length;
+    var start = state.config.progStart, end = state.config.progDeadline;
+
+    var busy = {};
+    if(lastPace && lastPace.sim && lastPace.sim.byDate){
+      Object.keys(lastPace.sim.byDate).forEach(function(dd){ busy[dd] = true; });
+    }
+
+    // Pool of candidate days that actually have study hours available (per Disponibilidad).
+    // Seeded generously through the configured deadline, and grown further on demand — this
+    // guarantees every milestone lands on a real, available day and never repeats a day, even
+    // when busy-day avoidance or a very tight window pushes past the original range.
+    var avail = [];
+    var cursorDate = start, guard = 0;
+    function growUntil(minLen, throughDate){
+      while(guard<6000 && (avail.length<minLen || (throughDate && cursorDate<=throughDate))){
+        if(capacityHoursFor(cursorDate) > 0) avail.push(cursorDate);
+        cursorDate = addDays(cursorDate,1);
+        guard++;
+      }
+    }
+    growUntil(m, end);
+    if(avail.length===0) avail = [start];
+
+    var cursor = 0;
+    var chosen = list.map(function(item, i){
+      var len = avail.length;
+      var ideal = m<=1 ? 0 : Math.min(len-1, Math.floor(i*len/m));
+      var idx = Math.max(ideal, cursor);
+      if(idx>=avail.length) growUntil(idx+1, null);
+      idx = Math.min(idx, avail.length-1);
+      if(busy[avail[idx]]){
+        for(var j=idx; j<Math.min(avail.length, idx+6); j++){ if(!busy[avail[j]]){ idx=j; break; } }
+      }
+      cursor = idx+1;
+      return avail[idx];
+    });
+
+    return list.map(function(item, i){
+      return { id:item.id, label:item.label, target: chosen[i], done: !!state.programacion.doneMap[item.id] };
+    });
+  }
+
+  var STUDY_PROTO = {
+    nuevo: 'Trabaja sobre tus fuentes y tu resumen del tema; termina la sesión intentando recitar en voz alta lo que recuerdes, sin mirar.',
+    valorar: 'Antes de puntuar, intenta recitar el tema entero de memoria una vez, sin mirar apuntes.',
+    repaso: 'Recuerdo activo: recita el esquema de memoria antes de mirar tus apuntes, y corrige después.',
+    practica: 'Resuelve 3-4 ejercicios sin mirar la solución primero; corrige y anota tus errores típicos.',
+    prog: 'Redacta un primer borrador siguiendo tu plantilla; no busques perfección a la primera.'
+  };
+
+  // ---------------- persistence ----------------
+  var db=null, docRef=null, state=null;
+  function persist(){ renderAll(); if(docRef){ docRef.set(state).catch(function(e){ console.error('save failed', e); }); } }
+  function showReadonlyBanner(){ var b=document.getElementById('readonlyBanner'); if(b) b.hidden=false; document.getElementById('syncLabel').textContent='Sin conexión al almacenamiento — cambios no persistentes'; }
+
+  async function init(){
+    wireStaticEvents();
+    try{ db = window.claude && window.claude.use ? await window.claude.use('db') : null; }catch(e){ db=null; }
+    if(!db){ state = freshState(); showReadonlyBanner(); renderAll(); return; }
+    docRef = db.doc('app/state');
+    docRef.onSnapshot(function(snap){
+      if(!snap.exists){ state = freshState(); docRef.set(state).catch(function(e){ console.error(e); }); }
+      else { state = ensureShape(JSON.parse(JSON.stringify(snap.data()))); }
+      renderAll();
+    }, function(err){
+      console.error('db error', err);
+      if(!state) state = freshState();
+      showReadonlyBanner();
+      renderAll();
+    });
+  }
+
+  // ---------------- events ----------------
+  var selectedISO = todayISO();
+  var calYear, calMonth;
+  var availYear, availMonth;
+  var hoyISO = todayISO();
+
+  function wireStaticEvents(){
+    document.querySelectorAll('.tab-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        document.querySelectorAll('.tabpanel').forEach(function(p){ p.hidden = true; });
+        document.getElementById('panel-'+btn.getAttribute('data-tab')).hidden = false;
+      });
+    });
+
+    document.getElementById('examDateInput').addEventListener('change', function(ev){ if(ev.target.value){ state.config.examDate = ev.target.value; persist(); } });
+    document.getElementById('reserveDaysInput').addEventListener('change', function(ev){ state.config.reserveDays = clamp(Number(ev.target.value)||0,0,180); persist(); });
+    document.getElementById('studyStartInput').addEventListener('change', function(ev){ if(ev.target.value){ state.config.studyStart = ev.target.value; persist(); } });
+    document.getElementById('progStartInput').addEventListener('change', function(ev){ if(ev.target.value){ state.config.progStart = ev.target.value; persist(); } });
+    document.getElementById('progDeadlineInput').addEventListener('change', function(ev){ if(ev.target.value){ state.config.progDeadline = ev.target.value; persist(); } });
+    document.getElementById('numUDsInput').addEventListener('change', function(ev){ state.config.numUDs = clamp(Number(ev.target.value)||12,1,40); persist(); });
+
+    document.getElementById('hoursPerTemaInput').addEventListener('change', function(ev){ state.config.hoursPerTemaBase = clamp(Number(ev.target.value)||9,1,40); persist(); });
+    document.getElementById('hoursPerSessionInput').addEventListener('change', function(ev){ state.config.hoursPerSession = clamp(Number(ev.target.value)||2,0.5,6); persist(); });
+    document.getElementById('weeklyTable').addEventListener('change', function(ev){
+      var day = ev.target.getAttribute('data-day');
+      if(!day) return;
+      if(ev.target.classList.contains('weekly-on')) state.config.weekly[day].on = ev.target.checked;
+      else if(ev.target.classList.contains('weekly-hours')) state.config.weekly[day].hours = clamp(Number(ev.target.value)||0,0,12);
+      persist();
+    });
+    document.getElementById('availPrev').addEventListener('click', function(){ availMonth--; if(availMonth<0){ availMonth=11; availYear--; } renderAvailCalendar(); });
+    document.getElementById('availNext').addEventListener('click', function(){ availMonth++; if(availMonth>11){ availMonth=0; availYear++; } renderAvailCalendar(); });
+    document.getElementById('availToday').addEventListener('click', function(){ var t=todayISO().split('-').map(Number); availYear=t[0]; availMonth=t[1]-1; renderAvailCalendar(); });
+    document.getElementById('holidayChips').addEventListener('click', function(ev){
+      var btn = ev.target.closest('[data-remove-holiday]');
+      if(!btn) return;
+      var idx = state.config.holidays.indexOf(btn.getAttribute('data-remove-holiday'));
+      if(idx!==-1){ state.config.holidays.splice(idx,1); persist(); }
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', async function(){
+      try{
+        var downloads = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+        var blob = new Blob([JSON.stringify(state,null,2)], { type:'application/json' });
+        if(downloads){ await downloads.save({ filename:'bitacora-biogeo-backup.json', data: blob }); }
+        else { alert('La descarga no está disponible en esta vista.'); }
+      }catch(e){ console.error(e); }
+    });
+
+    ['todayReviews','todayValorar','todayPractica'].forEach(function(id){
+      document.getElementById(id).addEventListener('click', onStudyCardClick);
+    });
+    document.getElementById('practicaList').addEventListener('click', onStudyCardClick);
+
+    document.getElementById('todayNew').addEventListener('click', function(ev){
+      var doneBtn = ev.target.closest('[data-session-complete]');
+      if(doneBtn){
+        var id = doneBtn.getAttribute('data-session-complete');
+        var t = TEMARIO_BY_ID[id];
+        var need = sessionsNeededFor(t, state.config);
+        var ts = state.temas[id];
+        ts.study.sessionsDone = Math.min(need, ts.study.sessionsDone+1);
+        ts.history.push({ date: hoyISO||todayISO(), session:true });
+        if(ts.history.length>60) ts.history = ts.history.slice(-60);
+        persist();
+        return;
+      }
+      var skipBtn = ev.target.closest('[data-session-skip]');
+      if(skipBtn){
+        var id2 = skipBtn.getAttribute('data-session-skip');
+        var ts2 = state.temas[id2];
+        ts2.history.push({ date: hoyISO||todayISO(), skipped:true });
+        if(ts2.history.length>60) ts2.history = ts2.history.slice(-60);
+        persist();
+      }
+    });
+
+    document.getElementById('todayProg').addEventListener('click', function(ev){
+      var btn = ev.target.closest('[data-prog-done]');
+      if(!btn) return;
+      state.programacion.doneMap[btn.getAttribute('data-prog-done')] = true;
+      persist();
+    });
+    document.getElementById('progChecklist').addEventListener('change', function(ev){
+      if(!ev.target.matches('input[type=checkbox]')) return;
+      var id = ev.target.getAttribute('data-id');
+      state.programacion.doneMap[id] = ev.target.checked;
+      persist();
+    });
+
+    document.getElementById('calPrev').addEventListener('click', function(){ calMonth--; if(calMonth<0){ calMonth=11; calYear--; } renderCalendar(lastPace); });
+    document.getElementById('calNext').addEventListener('click', function(){ calMonth++; if(calMonth>11){ calMonth=0; calYear++; } renderCalendar(lastPace); });
+    document.getElementById('calToday').addEventListener('click', function(){ var t=todayISO().split('-').map(Number); calYear=t[0]; calMonth=t[1]-1; selectedISO=todayISO(); renderCalendar(lastPace); });
+
+    document.getElementById('hoyPrev').addEventListener('click', function(){
+      var prev = addDays(hoyISO||todayISO(), -1);
+      var floor = addDays(todayISO(), -90);
+      if(prev>=floor) hoyISO = prev;
+      renderHoy(lastPace);
+    });
+    document.getElementById('hoyNext').addEventListener('click', function(){
+      var next = addDays(hoyISO||todayISO(), 1);
+      if(next<=todayISO()) hoyISO = next;
+      renderHoy(lastPace);
+    });
+    document.getElementById('hoyToday').addEventListener('click', function(){ hoyISO = todayISO(); renderHoy(lastPace); });
+
+    document.getElementById('addTaskToggle').addEventListener('click', function(){
+      var form = document.getElementById('addTaskForm');
+      form.hidden = !form.hidden;
+      if(!form.hidden) document.getElementById('addTaskDate').value = hoyISO || todayISO();
+    });
+    document.getElementById('addTaskType').addEventListener('change', function(ev){
+      var isFree = ev.target.value==='libre';
+      document.getElementById('addTaskTema').hidden = isFree;
+      document.getElementById('addTaskText').hidden = !isFree;
+    });
+    document.getElementById('addTaskForm').addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var type = document.getElementById('addTaskType').value;
+      var date = document.getElementById('addTaskDate').value || (hoyISO||todayISO());
+      var task = { id:'ct-'+Date.now().toString(36)+Math.random().toString(36).slice(2,7), type:type, date:date, done:false };
+      if(type==='repaso-tema'){
+        var temaId = document.getElementById('addTaskTema').value;
+        if(!temaId) return;
+        task.temaId = temaId;
+      } else {
+        var text = document.getElementById('addTaskText').value.trim();
+        if(!text) return;
+        task.text = text;
+      }
+      state.customTasks.push(task);
+      ev.target.reset();
+      document.getElementById('addTaskForm').hidden = true;
+      persist();
+    });
+    document.getElementById('todayCustom').addEventListener('click', function(ev){
+      var revealBtn = ev.target.closest('[data-task-reveal]');
+      if(revealBtn){
+        var row = document.querySelector('[data-task-rate="'+revealBtn.getAttribute('data-task-reveal')+'"]');
+        if(row) row.hidden = !row.hidden;
+        return;
+      }
+      var rateRow = ev.target.closest('[data-task-rate]');
+      var rateBtn = ev.target.closest('[data-q]');
+      if(rateRow && rateBtn){
+        var taskId = rateRow.getAttribute('data-task-rate');
+        var task = state.customTasks.filter(function(x){ return x.id===taskId; })[0];
+        if(task){
+          var q = Number(rateBtn.getAttribute('data-q'));
+          var logDate = hoyISO || todayISO();
+          var bucket = state.temas[task.temaId];
+          bucket.sr = nextSchedule(bucket.sr, q, logDate, null);
+          bucket.history.push({ date: logDate, q: q });
+          if(bucket.history.length>60) bucket.history = bucket.history.slice(-60);
+          task.done = true;
+          task.doneDate = logDate;
+          persist();
+        }
+        return;
+      }
+      var doneBtn = ev.target.closest('[data-task-done]');
+      if(doneBtn){
+        var id2 = doneBtn.getAttribute('data-task-done');
+        var task2 = state.customTasks.filter(function(x){ return x.id===id2; })[0];
+        if(task2){ task2.done = true; task2.doneDate = hoyISO || todayISO(); persist(); }
+      }
+    });
+
+    document.getElementById('bloquesContainer').addEventListener('change', function(ev){
+      if(ev.target.classList.contains('confidence-slider')){
+        var cid = ev.target.getAttribute('data-id');
+        var val = Number(ev.target.value);
+        var ts = state.temas[cid];
+        ts.confidence = val;
+        if(ts.sr && ts.sr.lastReview && val<40){
+          var pulled = addDays(todayISO(), 2);
+          if(!ts.sr.nextReview || pulled < ts.sr.nextReview) ts.sr.nextReview = pulled;
+        }
+        persist();
+        return;
+      }
+      if(!ev.target.matches('input[type=checkbox]')) return;
+      var id = ev.target.getAttribute('data-id');
+      state.temas[id].selected = ev.target.checked;
+      persist();
+    });
+    document.getElementById('bloquesContainer').addEventListener('input', function(ev){
+      if(!ev.target.classList.contains('confidence-slider')) return;
+      var wrap = ev.target.closest('.confidence-wrap');
+      if(wrap) wrap.querySelector('.confidence-val').textContent = ev.target.value+'%';
+    });
+  }
+
+  function onStudyCardClick(ev){
+    var revealBtn = ev.target.closest('.btn-reveal');
+    if(revealBtn && revealBtn.closest('.study-card').querySelector('.rate-row')){
+      var card = revealBtn.closest('.study-card'); var row = card.querySelector('.rate-row'); row.hidden = !row.hidden; return;
+    }
+    var rateBtn = ev.target.closest('[data-q]');
+    if(rateBtn){
+      var card2 = rateBtn.closest('.study-card');
+      var kind = card2.getAttribute('data-kind');
+      var id = card2.getAttribute('data-id');
+      var q = Number(rateBtn.getAttribute('data-q'));
+      var isPracticaTab = ev.currentTarget && ev.currentTarget.id==='practicaList';
+      var logDate = isPracticaTab ? todayISO() : (hoyISO || todayISO());
+      var bucket = kind==='practica' ? state.practica[id] : state.temas[id];
+      bucket.sr = nextSchedule(bucket.sr, q, logDate, kind==='practica' ? 14 : null);
+      bucket.history.push({ date: logDate, q: q });
+      if(bucket.history.length>60) bucket.history = bucket.history.slice(-60);
+      persist();
+    }
+  }
+
+  function historyLineHTML(h){
+    if(h.skipped) return 'marcada como no realizada';
+    if(h.session) return 'sesión de estudio completada';
+    if(h.custom) return 'tarea añadida por ti — completada';
+    return 'valoración: '+h.q+'/5';
+  }
+
+  // ---------------- rendering ----------------
+  var lastPace = null;
+  function renderAll(){
+    if(!state) return;
+    var t = todayISO().split('-').map(Number);
+    if(calYear===undefined){ calYear=t[0]; calMonth=t[1]-1; }
+    if(availYear===undefined){ availYear=t[0]; availMonth=t[1]-1; }
+    var pace = computePace();
+    lastPace = pace;
+    renderHero();
+    renderHoy(pace);
+    renderCalendar(pace);
+    renderTemario();
+    renderDisponibilidad();
+    renderProgramacion();
+    renderPractica();
+  }
+
+  function renderHero(){
+    var today = todayISO();
+    var days = daysBetween(today, state.config.examDate);
+    document.getElementById('daysToExam').textContent = days>=0 ? days : '0';
+    document.getElementById('examDateInput').value = state.config.examDate;
+    document.getElementById('reserveDaysInput').value = state.config.reserveDays;
+    document.getElementById('studyStartInput').value = state.config.studyStart;
+    document.getElementById('progStartInput').value = state.config.progStart;
+    document.getElementById('progDeadlineInput').value = state.config.progDeadline;
+    document.getElementById('numUDsInput').value = state.config.numUDs;
+
+    var deadline = deadlineISO(state.config);
+    var daysLeft = daysBetween(today, deadline);
+    var note;
+    if(days<0) note = 'La fecha de examen ya ha pasado — actualízala arriba.';
+    else if(daysLeft<=0) note = 'El plazo para la primera pasada de todo el temario ya se ha cumplido (' + fmtDateEs(deadline) + '): toca priorizar repaso general.';
+    else note = 'Fecha límite para terminar la primera pasada del temario seleccionado: ' + fmtDateEs(deadline) + ' (quedan ' + daysLeft + ' días). Los últimos ' + state.config.reserveDays + ' días antes del examen quedan solo para repaso.';
+    document.getElementById('deadlineNote').textContent = note;
+
+    var K = selectedTemaIds().length;
+    var pct = Math.round(probAtLeastOne(75, K, 4)*100);
+    document.getElementById('probPct').textContent = pct+'%';
+    var r=50, c=2*Math.PI*r;
+    var fg = document.getElementById('ringFg');
+    fg.style.strokeDasharray = c;
+    fg.style.strokeDashoffset = c*(1-pct/100);
+
+    var counts = { porEstudiar:0, en_progreso:0, dominado:0 };
+    selectedTemaIds().forEach(function(id){
+      var st = temaStatus(id);
+      if(st==='en_progreso') counts.en_progreso++;
+      else if(st==='dominado') counts.dominado++;
+      else counts.porEstudiar++;
+    });
+    var mini = document.getElementById('statsMiniGroup');
+    mini.innerHTML = '';
+    var chips = [['seleccionados', K+' / 75', 'Seleccionados'], ['nuevo', counts.porEstudiar, 'Por estudiar'], ['en_progreso', counts.en_progreso, 'En progreso'], ['dominado', counts.dominado, 'Dominados']];
+    chips.forEach(function(c){
+      var div = document.createElement('div');
+      div.className = 'mini-chip ' + c[0];
+      div.innerHTML = '<span class="n num-mono">'+c[1]+'</span><span class="l">'+c[2]+'</span>';
+      mini.appendChild(div);
+    });
+  }
+
+  function studyCardHTML(kind, id, title, meta, proto, btnLabel){
+    return '' +
+      '<div class="study-card" data-kind="'+kind+'" data-id="'+id+'">' +
+        '<div class="study-card-main">' +
+          '<div class="study-info">' +
+            '<p class="study-title">'+escapeHtml(title)+'</p>' +
+            '<p class="study-meta">'+meta+'</p>' +
+            '<p class="study-proto">'+proto+'</p>' +
+          '</div>' +
+          '<button type="button" class="btn-reveal">'+btnLabel+'</button>' +
+        '</div>' +
+        '<div class="rate-row" hidden>' +
+          '<button type="button" data-q="1">No me acordaba</button>' +
+          '<button type="button" data-q="3">Costó</button>' +
+          '<button type="button" data-q="4">Bien</button>' +
+          '<button type="button" data-q="5">Fácil</button>' +
+        '</div>' +
+      '</div>';
+  }
+  function sessionCardHTML(id, title, meta, proto){
+    return '' +
+      '<div class="study-card" data-kind="tema" data-id="'+id+'">' +
+        '<div class="study-card-main">' +
+          '<div class="study-info">' +
+            '<p class="study-title">'+escapeHtml(title)+'</p>' +
+            '<p class="study-meta">'+meta+'</p>' +
+            '<p class="study-proto">'+proto+'</p>' +
+          '</div>' +
+          '<div class="study-actions">' +
+            '<button type="button" class="btn-skip" data-session-skip="'+id+'">No pude hacerla</button>' +
+            '<button type="button" class="btn-reveal" data-session-complete="'+id+'">Sesión completada</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderPaceBanner(pace){
+    var el = document.getElementById('paceBanner');
+    var K = selectedTemaIds().length;
+    if(K===0){ el.className='pace-banner'; el.innerHTML='<span class="big">Aún no has seleccionado temas.</span><span>Ve a la pestaña «Temario» para elegir cuáles vas a preparar.</span>'; return; }
+    if(!pace.pending){ el.className='pace-banner ok'; el.innerHTML='<span class="big">Primera pasada del temario seleccionado completada.</span><span>A partir de aquí, todo es repaso y práctica.</span>'; return; }
+    if(pace.sim.incomplete){ el.className='pace-banner bad'; el.innerHTML='<span class="big">Con tu disponibilidad actual no terminarías nunca la primera pasada.</span><span>Revisa «Disponibilidad»: puede que tengas días desactivados o pocas horas configuradas.</span>'; return; }
+    var deadline = deadlineISO(state.config);
+    var finish = pace.sim.finishDate;
+    var diff = daysBetween(deadline, finish);
+    if(diff<=0){
+      el.className='pace-banner ok';
+      el.innerHTML='<span class="big">Vas bien de ritmo.</span><span>Terminarías la primera pasada el '+fmtDateEs(finish)+', '+Math.abs(diff)+' día(s) antes de tu límite ('+fmtDateEs(deadline)+').</span>';
+    } else {
+      el.className='pace-banner '+(diff>21?'bad':'warn');
+      el.innerHTML='<span class="big">Vas por detrás de ritmo.</span><span>Con tu disponibilidad actual terminarías la primera pasada el '+fmtDateEs(finish)+', '+diff+' día(s) después de tu límite ('+fmtDateEs(deadline)+'). Añade horas en «Disponibilidad» o quita algún tema en «Temario».</span>';
+    }
+  }
+
+  function customTaskHTML(task){
+    if(task.type==='repaso-tema' && TEMARIO_BY_ID[task.temaId]){
+      var t = TEMARIO_BY_ID[task.temaId];
+      return '<div class="study-card">' +
+          '<div class="study-card-main">' +
+            '<div class="study-info">' +
+              '<p class="study-title">Repaso extra: '+escapeHtml(t.title)+'</p>' +
+              '<p class="study-meta">Tema '+t.n+' · tarea añadida por ti · '+fmtDateEs(task.date)+'</p>' +
+              '<p class="study-proto">'+STUDY_PROTO.repaso+'</p>' +
+            '</div>' +
+            '<button type="button" class="btn-reveal" data-task-reveal="'+task.id+'">Repasar</button>' +
+          '</div>' +
+          '<div class="rate-row" hidden data-task-rate="'+task.id+'">' +
+            '<button type="button" data-q="1">No me acordaba</button>' +
+            '<button type="button" data-q="3">Costó</button>' +
+            '<button type="button" data-q="4">Bien</button>' +
+            '<button type="button" data-q="5">Fácil</button>' +
+          '</div>' +
+        '</div>';
+    }
+    return '<div class="study-card"><div class="study-card-main"><div class="study-info">' +
+      '<p class="study-title">'+escapeHtml(task.text||'Tarea')+'</p>' +
+      '<p class="study-meta">Tarea añadida por ti · '+fmtDateEs(task.date)+'</p>' +
+      '</div>' +
+      '<button type="button" class="btn-reveal" data-task-done="'+task.id+'">Marcar hecho</button>' +
+      '</div></div>';
+  }
+
+  function renderHoy(pace){
+    var realToday = todayISO();
+    var today = hoyISO || realToday;
+    renderPaceBanner(pace);
+
+    document.getElementById('hoyDateLabel').textContent = fmtDateEs(today) + (today===realToday ? ' · hoy' : '');
+    document.getElementById('hoyToday').hidden = (today===realToday);
+    document.getElementById('hoyNext').disabled = (today>=realToday);
+
+    var temaSelect = document.getElementById('addTaskTema');
+    var prevVal = temaSelect.value;
+    var temaOptions = selectedTemaIds().sort(function(a,b){ return TEMARIO_BY_ID[a].n-TEMARIO_BY_ID[b].n; })
+      .map(function(id){ var t=TEMARIO_BY_ID[id]; return '<option value="'+id+'">Tema '+t.n+'. '+escapeHtml(t.title)+'</option>'; }).join('');
+    temaSelect.innerHTML = temaOptions || '<option value="">(selecciona temas primero en «Temario»)</option>';
+    if(prevVal) temaSelect.value = prevVal;
+
+    var reviews = selectedTemaIds().filter(function(id){ var sr=state.temas[id].sr; return sr.lastReview && sr.nextReview<=today; });
+    reviews.sort(function(a,b){
+      var ca = state.temas[a].confidence==null ? 50 : state.temas[a].confidence;
+      var cb = state.temas[b].confidence==null ? 50 : state.temas[b].confidence;
+      if(ca!==cb) return ca-cb;
+      return daysBetween(state.temas[b].sr.nextReview,today) - daysBetween(state.temas[a].sr.nextReview,today) || TEMARIO_BY_ID[a].n - TEMARIO_BY_ID[b].n;
+    });
+
+    var valorar = getValorarIds();
+    var activeStudy = getActiveStudyIds();
+    var practicaDue = PRACTICA_CATALOG.filter(function(p){ return isDue(state.practica[p.id].sr, today); });
+    var progItems = progScheduleWithDates().filter(function(m){ return !m.done && m.target<=today; }).sort(function(a,b){ return a.target<b.target?-1:1; });
+    var customPending = state.customTasks.filter(function(ct){ return !ct.done && ct.date<=today; })
+      .sort(function(a,b){ return a.date<b.date?-1:(a.date>b.date?1:0); });
+
+    document.getElementById('todayCount').textContent = reviews.length+valorar.length+activeStudy.length+practicaDue.length+progItems.length+customPending.length;
+    document.getElementById('reviewsSubhead').hidden = reviews.length===0;
+    document.getElementById('valorarSubhead').hidden = valorar.length===0;
+    document.getElementById('newSubhead').hidden = activeStudy.length===0;
+    document.getElementById('practicaSubhead').hidden = practicaDue.length===0;
+    document.getElementById('progSubhead').hidden = progItems.length===0;
+    document.getElementById('customSubhead').hidden = customPending.length===0;
+
+    var notStarted = today < state.config.studyStart;
+    var nsEl = document.getElementById('studyNotStarted');
+    nsEl.hidden = !notStarted;
+    if(notStarted) nsEl.textContent = 'Tu estudio de temario empieza el ' + fmtDateEs(state.config.studyStart) + '.';
+
+    document.getElementById('todayReviews').innerHTML = reviews.map(function(id){
+      var t = TEMARIO_BY_ID[id], sr=state.temas[id].sr;
+      var overdue = daysBetween(sr.nextReview,today);
+      var conf = state.temas[id].confidence;
+      var confNote = (conf!=null && conf<40) ? ' · lo llevas flojo ('+conf+'%)' : '';
+      var meta = (overdue>0 ? ('Pendiente desde hace '+overdue+' día'+(overdue===1?'':'s')) : 'Repaso de hoy') + ' · repetición '+sr.reps+' · tema '+t.n+confNote;
+      return studyCardHTML('tema', id, t.title, meta, STUDY_PROTO.repaso, 'Repasar');
+    }).join('');
+
+    document.getElementById('todayValorar').innerHTML = valorar.map(function(id){
+      var t = TEMARIO_BY_ID[id];
+      return studyCardHTML('tema', id, t.title, 'Tema '+t.n+' · sesiones de estudio completadas', STUDY_PROTO.valorar, 'Valorar');
+    }).join('');
+
+    document.getElementById('todayNew').innerHTML = activeStudy.map(function(id){
+      var t = TEMARIO_BY_ID[id], ts = state.temas[id];
+      var need = sessionsNeededFor(t, state.config);
+      var meta = 'Tema '+t.n+' · '+t.bloque+' · sesión '+(ts.study.sessionsDone+1)+' de '+need+' (≈'+state.config.hoursPerSession+'h cada una)';
+      return sessionCardHTML(id, t.title, meta, STUDY_PROTO.nuevo);
+    }).join('');
+
+    document.getElementById('todayPractica').innerHTML = practicaDue.map(function(p){
+      var sr = state.practica[p.id].sr;
+      var meta = estadoOf(sr)==='nuevo' ? 'Primera sesión' : ('repetición '+sr.reps);
+      return studyCardHTML('practica', p.id, p.label, p.desc+' · '+meta, STUDY_PROTO.practica, estadoOf(sr)==='nuevo'?'Empezar sesión':'Practicar');
+    }).join('');
+
+    document.getElementById('todayProg').innerHTML = progItems.slice(0,4).map(function(m){
+      var overdue = m.target<today;
+      return '<div class="study-card"><div class="study-card-main"><div class="study-info"><p class="study-title">'+escapeHtml(m.label)+'</p>' +
+        '<p class="study-meta">'+(overdue?'Atrasado, objetivo: '+fmtDateEs(m.target):'Objetivo: '+fmtDateEs(m.target))+'</p>' +
+        '<p class="study-proto">'+STUDY_PROTO.prog+'</p></div>' +
+        '<button type="button" class="btn-reveal" data-prog-done="'+m.id+'">Marcar hecho</button></div></div>';
+    }).join('') + (progItems.length>4 ? '<p class="empty-note">+ '+(progItems.length-4)+' más en la pestaña Programación.</p>' : '');
+
+    document.getElementById('todayCustom').innerHTML = customPending.map(customTaskHTML).join('');
+
+    document.getElementById('todayEmpty').hidden = !(reviews.length===0 && valorar.length===0 && activeStudy.length===0 && practicaDue.length===0 && progItems.length===0 && customPending.length===0);
+  }
+
+  var DOW = ['L','M','X','J','V','S','D'];
+  var MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  function buildHistoryByDate(){
+    var map = {};
+    function add(date, label, h){ map[date] = map[date]||[]; map[date].push({ label:label, q:h.q, skipped:h.skipped, session:h.session, custom:h.custom }); }
+    TEMARIO.forEach(function(t){ state.temas[t.id].history.forEach(function(h){ add(h.date, t.title, h); }); });
+    PRACTICA_CATALOG.forEach(function(p){ state.practica[p.id].history.forEach(function(h){ add(h.date, p.label, h); }); });
+    state.customTasks.forEach(function(ct){ if(ct.done && ct.type==='libre') add(ct.doneDate||ct.date, ct.text, { custom:true }); });
+    return map;
+  }
+
+  function renderCalendar(pace){
+    var today = todayISO();
+    document.getElementById('calTitle').textContent = MONTHS[calMonth] + ' de ' + calYear;
+    var grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    DOW.forEach(function(d){ var el=document.createElement('div'); el.className='cal-dow'; el.textContent=d; grid.appendChild(el); });
+
+    var firstWd = (new Date(Date.UTC(calYear,calMonth,1)).getUTCDay()+6)%7;
+    var numDays = new Date(Date.UTC(calYear,calMonth+1,0)).getUTCDate();
+    var studyByDate = pace.sim.byDate;
+    var progSchedule = progScheduleWithDates();
+    var progByDate = {};
+    progSchedule.forEach(function(m){ progByDate[m.target] = progByDate[m.target]||[]; progByDate[m.target].push(m); });
+    var deadline = deadlineISO(state.config);
+
+    for(var i=0;i<firstWd;i++){ var e=document.createElement('div'); e.className='cal-cell empty'; grid.appendChild(e); }
+
+    for(var day=1; day<=numDays; day++){
+      var iso = calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      var isHoliday = state.config.holidays.indexOf(iso)!==-1;
+      var capacity = capacityHoursFor(iso);
+      var inReserve = iso>deadline && iso<=state.config.examDate;
+      var cell = document.createElement('div');
+      cell.className = 'cal-cell'
+        + (iso===today?' today':'')
+        + (iso<today?' past':'')
+        + (iso===selectedISO?' selected':'')
+        + (isHoliday?' holiday':'')
+        + (!isHoliday && capacity<=0 ? ' off':'')
+        + (inReserve?' reserve':'');
+      cell.setAttribute('data-iso', iso);
+      var dots = '';
+      var reviewCount = 0;
+      if(iso===today) reviewCount = selectedTemaIds().filter(function(id){ var sr=state.temas[id].sr; return sr.lastReview && sr.nextReview<=today; }).length;
+      else if(iso>today) reviewCount = selectedTemaIds().filter(function(id){ return state.temas[id].sr.nextReview===iso; }).length;
+      if(reviewCount>0) dots += '<span class="cal-dot review" title="'+reviewCount+' repasos"></span>';
+      if(studyByDate[iso] && studyByDate[iso].length) dots += '<span class="cal-dot newd" title="sesión de estudio"></span>';
+      var pracHit = PRACTICA_CATALOG.some(function(p){ var sr=state.practica[p.id].sr; return iso===today ? isDue(sr,today) : sr.nextReview===iso; });
+      if(pracHit) dots += '<span class="cal-dot practica" title="práctica"></span>';
+      if(progByDate[iso]) dots += '<span class="cal-dot prog" title="programación"></span>';
+      var flag = iso===state.config.examDate ? '<span class="flag">🎓</span>' : (isHoliday ? '<span class="flag">🚫</span>' : '');
+      cell.innerHTML = '<span class="d">'+day+'</span>'+flag+'<div class="cal-dots">'+dots+'</div>';
+      cell.addEventListener('click', function(){ selectedISO = this.getAttribute('data-iso'); renderCalendar(lastPace); });
+      grid.appendChild(cell);
+    }
+
+    renderAgenda(pace, progByDate);
+  }
+
+  function renderAgenda(pace, progByDate){
+    var today = todayISO();
+    var iso = selectedISO;
+    var box = document.getElementById('agenda');
+    var html = '<h3 class="agenda-date">'+fmtDateEs(iso)+(iso===today?' · hoy':'')+'</h3>';
+    if(iso===state.config.examDate) html += '<div class="exam-flag-banner">🎓 Día del examen — primera prueba.</div>';
+    if(state.config.holidays.indexOf(iso)!==-1) html += '<div class="exam-flag-banner">🚫 Marcado como día sin estudio.</div>';
+
+    if(iso<today){
+      var hist = buildHistoryByDate()[iso] || [];
+      html += '<div class="agenda-group"><h4>Ese día trabajaste</h4>';
+      html += hist.length ? hist.map(function(h){ return '<div class="agenda-item"><span class="t">'+escapeHtml(h.label)+'</span><div class="h">'+historyLineHTML(h)+'</div></div>'; }).join('') : '<p class="agenda-empty">Sin registros ese día.</p>';
+      html += '</div>';
+    } else {
+      var reviewIds = selectedTemaIds().filter(function(id){ var sr=state.temas[id].sr; return iso===today ? (sr.lastReview && sr.nextReview<=today) : sr.nextReview===iso; });
+      html += '<div class="agenda-group"><h4>Repasos</h4>' + (reviewIds.length ? reviewIds.map(function(id){ return '<div class="agenda-item"><span class="t">Tema '+TEMARIO_BY_ID[id].n+'. '+escapeHtml(TEMARIO_BY_ID[id].title)+'</span><div class="h">'+STUDY_PROTO.repaso+'</div></div>'; }).join('') : '<p class="agenda-empty">Ningún repaso ese día.</p>') + '</div>';
+
+      var sessionsToday = (pace.sim.byDate[iso]||[]);
+      html += '<div class="agenda-group"><h4>Sesión de estudio (previsión)</h4>' + (sessionsToday.length ? sessionsToday.map(function(s){ var t=TEMARIO_BY_ID[s.id]; return '<div class="agenda-item newd"><span class="t">Tema '+t.n+'. '+escapeHtml(t.title)+'</span><div class="h">'+(s.willFinish?'Con esta sesión terminarías la primera pasada de este tema.':STUDY_PROTO.nuevo)+'</div></div>'; }).join('') : '<p class="agenda-empty">Sin sesión de estudio prevista.</p>') + '</div>';
+
+      var pracHit = PRACTICA_CATALOG.filter(function(p){ var sr=state.practica[p.id].sr; return iso===today ? isDue(sr,today) : sr.nextReview===iso; });
+      html += '<div class="agenda-group"><h4>Práctica</h4>' + (pracHit.length ? pracHit.map(function(p){ return '<div class="agenda-item practica"><span class="t">'+escapeHtml(p.label)+'</span><div class="h">'+p.desc+'</div></div>'; }).join('') : '<p class="agenda-empty">Sin sesión de práctica ese día.</p>') + '</div>';
+
+      var progHit = progByDate[iso] || [];
+      html += '<div class="agenda-group"><h4>Programación didáctica</h4>' + (progHit.length ? progHit.map(function(m){ return '<div class="agenda-item prog"><span class="t">'+escapeHtml(m.label)+(m.done?' ✓':'')+'</span><div class="h">'+STUDY_PROTO.prog+'</div></div>'; }).join('') : '<p class="agenda-empty">Sin hito de programación ese día.</p>') + '</div>';
+    }
+    box.innerHTML = html;
+  }
+
+  function renderTemario(){
+    var K = selectedTemaIds().length;
+    document.getElementById('temarioSelectedCount').textContent = K + ' / 75 seleccionados';
+    var box = document.getElementById('bloquesContainer');
+    box.innerHTML = BLOQUE_ORDER.map(function(bloque){
+      var temasInBloque = TEMARIO.filter(function(t){ return t.bloque===bloque; });
+      var sel = temasInBloque.filter(function(t){ return state.temas[t.id].selected; }).length;
+      var rows = temasInBloque.map(function(t){
+        var ts = state.temas[t.id];
+        var est = temaStatus(t.id);
+        var confVal = ts.confidence==null ? 50 : ts.confidence;
+        return '<div class="tema-select-row">' +
+          '<input type="checkbox" data-id="'+t.id+'" id="chk-'+t.id+'" '+(ts.selected?'checked':'')+'>' +
+          '<span class="n">'+t.n+'</span>' +
+          '<label class="title" for="chk-'+t.id+'">'+escapeHtml(t.title)+
+            (t.practicaTag ? ' <span class="practica-mark" title="Útil para la parte práctica: '+escapeHtml(PRACTICA_BY_ID[t.practicaTag].label)+'">*</span>' : '') +
+          '</label>' +
+          (ts.selected ? '<span class="pill '+est+'">'+ESTADO_LABEL[est]+'</span>' : '') +
+          (ts.selected ? '<span class="confidence-wrap" title="¿Cómo de bien te lo sabes ahora mismo? Si lo marcas bajo, el repaso se adelanta.">' +
+            '<input type="range" min="0" max="100" step="5" class="confidence-slider" data-id="'+t.id+'" value="'+confVal+'">' +
+            '<span class="confidence-val">'+(ts.confidence==null?'—':ts.confidence+'%')+'</span>' +
+          '</span>' : '') +
+          '</div>';
+      }).join('');
+      return '<details class="bloque-group"' + (sel>0?' open':'') + '><summary>'+bloque+' <span class="bloque-count">'+sel+' / '+temasInBloque.length+'</span></summary>'+rows+'</details>';
+    }).join('');
+  }
+
+  function renderDisponibilidad(){
+    document.getElementById('hoursPerTemaInput').value = state.config.hoursPerTemaBase;
+    document.getElementById('hoursPerSessionInput').value = state.config.hoursPerSession;
+
+    var wt = document.getElementById('weeklyTable');
+    wt.innerHTML = WEEKDAY_ORDER.map(function(key){
+      var w = state.config.weekly[key];
+      return '<div class="weekly-row">' +
+        '<input type="checkbox" data-day="'+key+'" class="weekly-on" id="wk-'+key+'" '+(w.on?'checked':'')+'>' +
+        '<label class="day" for="wk-'+key+'">'+WEEKDAY_LABELS[key]+'</label>' +
+        '<input type="number" data-day="'+key+'" class="weekly-hours" min="0" max="12" step="0.5" value="'+w.hours+'" '+(w.on?'':'disabled')+'>' +
+        '<span style="font-size:.76rem;color:var(--ink-faint);">h</span>' +
+        '</div>';
+    }).join('');
+
+    renderAvailCalendar();
+  }
+
+  function renderAvailCalendar(){
+    document.getElementById('availCalTitle').textContent = MONTHS[availMonth] + ' de ' + availYear;
+    var grid = document.getElementById('availGrid');
+    grid.innerHTML = '';
+    DOW.forEach(function(d){ var el=document.createElement('div'); el.className='cal-dow'; el.textContent=d; grid.appendChild(el); });
+    var firstWd = (new Date(Date.UTC(availYear,availMonth,1)).getUTCDay()+6)%7;
+    var numDays = new Date(Date.UTC(availYear,availMonth+1,0)).getUTCDate();
+    var today = todayISO();
+    for(var i=0;i<firstWd;i++){ var e=document.createElement('div'); e.className='cal-cell empty'; grid.appendChild(e); }
+    for(var day=1; day<=numDays; day++){
+      var iso = availYear+'-'+String(availMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+      var isHoliday = state.config.holidays.indexOf(iso)!==-1;
+      var cell = document.createElement('div');
+      cell.className = 'cal-cell' + (iso===today?' today':'') + (isHoliday?' holiday':'');
+      cell.setAttribute('data-iso', iso);
+      cell.innerHTML = '<span class="d">'+day+'</span>' + (isHoliday?'<span class="flag">🚫</span>':'');
+      cell.addEventListener('click', function(){
+        var i2 = this.getAttribute('data-iso');
+        var idx = state.config.holidays.indexOf(i2);
+        if(idx===-1) state.config.holidays.push(i2); else state.config.holidays.splice(idx,1);
+        state.config.holidays.sort();
+        persist();
+      });
+      grid.appendChild(cell);
+    }
+    renderHolidayChips();
+  }
+
+  function renderHolidayChips(){
+    var box = document.getElementById('holidayChips');
+    if(!state.config.holidays.length){ box.innerHTML = '<p class="agenda-empty">Ningún día marcado todavía.</p>'; return; }
+    box.innerHTML = state.config.holidays.map(function(iso){
+      return '<span class="holiday-chip">'+fmtDateEs(iso)+'<button type="button" data-remove-holiday="'+iso+'" aria-label="Quitar">✕</button></span>';
+    }).join('');
+  }
+
+  function renderProgramacion(){
+    var schedule = progScheduleWithDates();
+    var done = schedule.filter(function(m){ return m.done; }).length;
+    document.getElementById('progLabel').textContent = done+' / '+schedule.length;
+    document.getElementById('progBar').style.width = (schedule.length? Math.round(done/schedule.length*100):0)+'%';
+    var today = todayISO();
+    document.getElementById('progChecklist').innerHTML = schedule.map(function(m){
+      var overdue = !m.done && m.target<today;
+      return '<div class="check-row'+(m.done?' done':'')+(overdue?' overdue':'')+'">' +
+        '<input type="checkbox" data-id="'+m.id+'" id="prog-'+m.id+'" '+(m.done?'checked':'')+'>' +
+        '<label class="lab" for="prog-'+m.id+'">'+escapeHtml(m.label)+'</label>' +
+        '<span class="date">'+fmtDateEs(m.target)+'</span>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderPractica(){
+    document.getElementById('practicaList').innerHTML = PRACTICA_CATALOG.map(function(p){
+      var sr = state.practica[p.id].sr;
+      var est = estadoOf(sr);
+      var meta = est==='nuevo' ? 'Aún sin empezar' : ('Repetición '+sr.reps+' · próxima: '+fmtDateEs(sr.nextReview));
+      return studyCardHTML('practica', p.id, p.label, p.desc+' · '+meta, STUDY_PROTO.practica, est==='nuevo'?'Empezar sesión':'Practicar');
+    }).join('');
+  }
+
+  init();
+})();
+</script>
+
+</body></html>
